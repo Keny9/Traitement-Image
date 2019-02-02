@@ -1,0 +1,38 @@
+TP1 EnvDB
+
+Classes:
+    color.Pixel
+        color.Color
+    color.Pigmentation
+    color.Color : color.Pigmentation
+        R
+        G
+        B
+    color.Greyscale : color.Pigmentation
+
+    file.Image
+
+    File
+    FilePGM extends File
+    FilePPM extends File
+
+file.ImageManipulator
+
+convert command
+convert nom.jpg -compress none nom.pgm
+convert nom.jpg -compress none nom.ppm
+
+detect type from fileName
+
+
+
+Etapes a faire
+    Diagram de classes
+    Creer classes
+    Creer methodes
+    Creer proprietes
+    Generate Javadoc
+    Fill Javadoc
+    Coder methodes
+    Commenter le code
+    MAJ Javadoc
