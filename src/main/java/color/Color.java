@@ -4,14 +4,14 @@ import java.util.Objects;
 
 /**
  The type Color. */
-public class Color {
+public class Color implements Pixel{
     
     /** The R. */
-    Pigmentation R;
+    int R;
     /** The G. */
-    Pigmentation G;
+    int G;
     /** The B. */
-    Pigmentation B;
+    int B;
     
     /**
      Instantiates a new Color.
@@ -19,7 +19,7 @@ public class Color {
      @param g the g
      @param b the b
      */
-    public Color(Pigmentation r, Pigmentation g, Pigmentation b) {
+    public Color(int r, int g, int b) {
         
         R = r;
         G = g;
@@ -30,7 +30,7 @@ public class Color {
      Gets r.
      @return the r
      */
-    public Pigmentation getR() {
+    public int getR() {
         
         return R;
     }
@@ -38,7 +38,7 @@ public class Color {
      Gets g.
      @return the g
      */
-    public Pigmentation getG() {
+    public int getG() {
         
         return G;
     }
@@ -46,7 +46,7 @@ public class Color {
      Gets b.
      @return the b
      */
-    public Pigmentation getB() {
+    public int getB() {
         
         return B;
     }
@@ -55,7 +55,7 @@ public class Color {
      Sets r.
      @param r the r
      */
-    public void setR(Pigmentation r) {
+    public void setR(int r) {
         
         R = r;
     }
@@ -63,7 +63,7 @@ public class Color {
      Sets g.
      @param g the g
      */
-    public void setG(Pigmentation g) {
+    public void setG(int g) {
         
         G = g;
     }
@@ -71,11 +71,21 @@ public class Color {
      Sets b.
      @param b the b
      */
-    public void setB(Pigmentation b) {
+    public void setB(int b) {
         
         B = b;
     }
+    /**
+     
+     @return
+     */
+    public Color getColor() {
+        
+        return null;
+    }
+    public void setColor(Color color) {
     
+    }
     @Override
     public boolean equals(Object o) {
         

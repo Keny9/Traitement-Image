@@ -1,3 +1,5 @@
+TP1 EnvDB
+
 Classes:
     Pixel:
         Pigment[][]
@@ -6,21 +8,21 @@ Classes:
 
     Color : Pigment
         int[3]
-
+        
     Grey : Pigment
         int
 
     Image:
         Pixel[][]
 
-    File:
-
+    File
 
     FilePGM : File
 
     FilePPM : File
-
-file.ImageManipulator
+    
+    
+ImageManipulator
 
 convert command
 convert nom.jpg -compress none nom.pgm
@@ -28,7 +30,16 @@ convert nom.jpg -compress none nom.ppm
 
 detect type from fileName
 
-
+ImageManipulator
+lire
+ecrire
+copier
+couleur_preponderante
+eclaircir_noircir
+extraire
+reduire
+sont_identique
+pivoter90
 
 Etapes a faire
     Diagram de classes
