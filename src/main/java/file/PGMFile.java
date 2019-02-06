@@ -1,10 +1,16 @@
 package file;
 
-import java.io.File;
-import java.net.URI;
-
 /**
- The type Pgm file. */
-public class PGMFile extends ImageFile {
+ * Classe qui instancie un fichier PGM 
+ * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ */
+public class PGMFile extends Image {
 
+    /**
+     * Constructeur d'un fichier PGM
+     * @param fichier 
+     */
+    PGMFile(String fichier){
+        super(fichier);
+    }
 }

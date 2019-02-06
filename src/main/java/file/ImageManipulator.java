@@ -3,10 +3,16 @@ package file;
 import java.io.File;
 
 /**
- The type Image manipulator. */
+ * 
+ * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ * Classe qui nous permet de manipuler une image poour la modifier
+ * Telle que changer la luminosité de l'image, copier le contenu d'une image
+ * dans une autre image ou même changer la rotation de l'image.
+ * 
+ */
 public class ImageManipulator {
     
-    private Image img;
+    private Image img; //L'image à manipuler
     
     /**
      The entry point of application.
@@ -18,16 +24,16 @@ public class ImageManipulator {
     }
     
     /**
-     Gets img.
-     @return the img
+     
+     @return l'image en manipulation
      */
     public Image getImg() {
         
         return img;
     }
     /**
-     Sets img.
-     @param img the img
+     Appliquer une image à l'image
+     @param img l'image qu'on veut appliquer
      */
     public void setImg(Image img) {
         
@@ -36,77 +42,83 @@ public class ImageManipulator {
     
     
     /**
-     Lire.
-     @param i the
-     @param f the f
+     Ouvre en lecture le fichier en format PGM ou PPM spécifié et charge les données dans l’image
+     @param i l'image
+     @param f le fichier dans lequel on lit les données
      */
     public void lire(Image i, File f) {
     
     }
     /**
-     Ecrire.
-     @param f the f
-     @param i the
+     Ouvre le fichier spécifié et y sauvegarde en format PGM ou PPM l’image
+     @param f le fichier dans lequel on veut ecrire les donnees
+     @param i l'image qui va nous permettre d'ecrire dans le fichier
      */
     public void ecrire(File f, Image i) {
     
     }
+    
     /**
-     Copier.
-     @param i1 the 1
-     @param i2 the 2
+     Prend l’objet i1 et fait une copie dans l’objet i2
+     @param i1 the 1 L'image qu'on copie
+     @param i2 the 2 L'image dans lequel on colle les donnees
      */
     public void copier(Image i1, Image i2) {
     
     }
     /**
-     Couleur preponderante.
-     @param i the
+     Retournera la couleur prépondérante de l’image i
+     @param i L'image dans laquelle on veut recuperer la couleur dominante de l'image
      */
     public void couleur_preponderante(Image i) {
     
     }
     /**
-     Eclaircir noircir.
-     @param i the
-     @param v the v
+     Modifie la valeur de chaque pixel de l’image d’une valeur spécifiée, 
+     * si v est positif, l’image devient plus noire, si v est négatif, l’image devient plus claire
+     @param i L'image dans laquelle on veut changer la luminosite
+     @param v the v L'intensite qu'on veut appliquer a l'image
      */
     public void eclaircir_noircir(Image i, int v) {
     
     }
+    
     /**
-     Extraire.
-     @param i  the
-     @param p1 the p 1
-     @param c1 the c 1
-     @param p2 the p 2
-     @param c2 the c 2
+     Extraire un sous ensemble de l’image partir de du point p1,c1 jusqu’à p2,c2
+     @param i  L'image dans laquelle on veut extraire les donnees
+     @param x1  Position x debut dans fichier
+     @param y1  Position y debut dans fichier
+     @param x2  Position x fin dans fichier 
+     @param y2  Position y fin dans fichier
+     * Ce qui nous donnera une zone dans laquelle on veut recuperer les donnees
      */
-    public void extraire(Image i, int p1, int c1, int p2, int c2) {
+    public void extraire(Image i, int x1, int y1, int x2, int y2) {
     
     }
     /**
-     Reduire.
-     @param i the
+     Reduire une image i1 a une image i2
+     * Reduit la taille de l'image
+     @param i L'image qu'on veut reduire
      */
     public void reduire(Image i) {
     
     }
     /**
-     Sont identique.
-     @param i1 the 1
-     @param i2 the 2
+     Verfifie si 2 images sont identiques
+     @param i1 1 image qu'on veut comparer
+     @param i2 la deuxieme image qu'on veut comparer
      */
     public void sont_identique(Image i1, Image i2) {
     
     }
     /**
-     Pivoter 90.
-     @param i the
+     Pivoter l'image d'une rotation de 90 
+     @param i L'image dans laquelle on fait une rotation
      */
     public void pivoter90(Image i) {
     
     }
+    
     @Override
     public String toString() {
         

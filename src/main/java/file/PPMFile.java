@@ -1,10 +1,18 @@
 package file;
 
-import java.io.File;
-import java.net.URI;
-
 /**
- The type Ppm file. */
-public class PPMFile extends ImageFile {
+ * Classe qui instancie un fichier PPM
+ * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ */
+public class PPMFile extends Image {
 
+    /**
+     * Constructeur d'un fichier PPM
+     * @param fichier 
+     */
+    PPMFile(String fichier){
+        super(fichier);
+    }
+    
+        
 }

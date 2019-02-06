@@ -1,54 +1,40 @@
 package file;
 
-import java.io.File;
-import java.util.Objects;
+import color.Pixel;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
 
 /**
- The type Image. */
+ * Classe qui gère une image et ses pixels
+ * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ */
 public class Image {
     
-    private File file;
+    private FileReader fileImage;
+    private BufferedReader br;
+    private String line;
+    private ArrayList<ArrayList<Pixel>> m;  //Le tableau de pixel
     
     /**
-     Instantiates a new Image.
-     @param file the file
+     * Constructeur d'une image
      */
-    public Image(File file) {
+    Image(String nomFichier){
         
-        this.file = file;
     }
+    
     /**
-     Gets file.
-     @return the file
+     * Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
-    public File getFile() {
+    public void lire(){
         
-        return file;
     }
+    
     /**
-     Sets file.
-     @param file the file
+     * Modifie les donnees d'une image
      */
-    public void setFile(File file) {
+    public void ecrire(){
         
-        this.file = file;
     }
-    @Override
-    public boolean equals(Object o) {
-        
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Image image = (Image) o;
-        return Objects.equals(file, image.file);
-    }
-    @Override
-    public int hashCode() {
-        
-        return Objects.hash(file);
-    }
-    @Override
-    public String toString() {
-        
-        return "Image{" + "file=" + file + '}';
-    }
+            
 }

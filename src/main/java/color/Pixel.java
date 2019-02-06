@@ -1,30 +1,21 @@
 package color;
 
-import java.util.Objects;
-
 /**
- The type Pixel. */
+ * Interface qui permet de get et de set les donnees d'un pixel
+ * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ */
 public interface Pixel {
     
-
-    
-
     /**
-     Gets color.
-     @return the color
+     
+     @return les donnees du pixel
      */
-    public Color getColor();
+    public Pixel getPixel();
+    
     /**
-     Sets color.
-     @param color the color
+     Applique les donnes du pixel 
+     @param pixel la valeur
      */
-    public void setColor(Color color) ;
+    public void setPixel(Pixel pixel) ;
     
-    @Override
-    public boolean equals(Object o);
-    @Override
-    public int hashCode() ;
-    
-    @Override
-    public String toString();
 }

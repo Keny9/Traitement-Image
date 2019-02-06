@@ -1,9 +1,9 @@
 package color;
 
-import java.util.Objects;
-
 /**
- The type Color. */
+ * 
+ * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ */
 public class Color implements Pixel{
     
     /** The R. */
@@ -86,23 +86,18 @@ public class Color implements Pixel{
     public void setColor(Color color) {
     
     }
-    @Override
-    public boolean equals(Object o) {
-        
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Color color = (Color) o;
-        return Objects.equals(R, color.R) && Objects.equals(G, color.G) && Objects.equals(B, color.B);
-    }
-    @Override
-    public int hashCode() {
-        
-        return Objects.hash(R, G, B);
-    }
     
     @Override
     public String toString() {
         
         return "Color{" + "R=" + R + ", G=" + G + ", B=" + B + '}';
+    }
+
+    public Pixel getPixel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setPixel(Pixel pixel) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
