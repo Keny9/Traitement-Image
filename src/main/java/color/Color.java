@@ -1,17 +1,23 @@
 package color;
 
 /**
- * 
- * @author Karl Boutin, Maxime Lussier et Anthony Côté
- */
-public class Color implements Pixel{
+ @author Karl Boutin, Maxime Lussier et Anthony Cote */
+public class Color implements Pixel {
     
-    /** The R. */
-    int R;
-    /** The G. */
-    int G;
-    /** The B. */
-    int B;
+    int[] pigment = { 0, 0, 0 };
+    
+    // Index de pigment
+    private static int RED;
+    private static int GREEN;
+    private static int BLUE;
+    
+    
+    public Color(){
+        
+        pigment[RED] = 0;
+        pigment[GREEN] = 0;
+        pigment[BLUE] = 0;
+    }
     
     /**
      Instantiates a new Color.
@@ -19,85 +25,107 @@ public class Color implements Pixel{
      @param g the g
      @param b the b
      */
-    public Color(int r, int g, int b) {
+    public Color(int r, int g, int b) throws Exception{
         
-        R = r;
-        G = g;
-        B = b;
+        setRed(r);
+        setGreen(g);
+        setBlue(b);
     }
     
     /**
      Gets r.
      @return the r
      */
-    public int getR() {
-        
-        return R;
-    }
+    public int getRed() { return pigment[RED]; }
     /**
      Gets g.
      @return the g
      */
-    public int getG() {
-        
-        return G;
-    }
+    public int getGreen() { return pigment[GREEN]; }
     /**
      Gets b.
      @return the b
      */
-    public int getB() {
-        
-        return B;
-    }
+    public int getBlue() { return pigment[BLUE]; }
+    
     
     /**
      Sets r.
      @param r the r
      */
-    public void setR(int r) {
-        
-        R = r;
-    }
+    public void setRed(int r) throws Exception { setPigment(RED, r); }
     /**
      Sets g.
      @param g the g
      */
-    public void setG(int g) {
-        
-        G = g;
-    }
+    public void setGreen(int g) throws Exception { setPigment(GREEN, g); }
     /**
      Sets b.
      @param b the b
      */
-    public void setB(int b) {
-        
-        B = b;
-    }
+    public void setBlue(int b) throws Exception { setPigment(BLUE, b); }
     /**
-     
      @return
      */
-    public Color getColor() {
-        
-        return null;
-    }
-    public void setColor(Color color) {
     
-    }
     
     @Override
     public String toString() {
         
-        return "Color{" + "R=" + R + ", G=" + G + ", B=" + B + '}';
+        return "Color{" + "RED=" + pigment[RED] + ", GREEN=" + pigment[GREEN] + ", BLUE=" + pigment[BLUE] + '}';
     }
-
+    
     public Pixel getPixel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     public void setPixel(Pixel pixel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    @Override
+    public Pixel clone() {
+        try {
+            return new Color(getRed(), getGreen(), getBlue());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return new Color();
+    }
+    public int getNbrPigment() { return 3; }
+    
+    public int getPigment(int index) throws ArrayIndexOutOfBoundsException {
+        
+        validatePigmentIndex(index);
+        return pigment[index];
+        
+    }
+    
+    @Override
+    public void setPigment(int index, int value) throws Exception {
+        
+        validatePigmentIndex(index);
+        validatePigmentTone(value);
+        pigment[index] = value;
+    }
+    
+    @Override
+    public int getAverage() { return (pigment[RED] + pigment[GREEN] + pigment[BLUE]) / 3; }
+    
+    @Override
+    public boolean equals(Pixel p) {
+        
+        if (p.getClass() != Color.class) return false;
+        
+        try {
+            return (pigment[RED] == p.getPigment(RED) && pigment[GREEN] == p.getPigment(GREEN) && pigment[BLUE] == p.getPigment(BLUE));
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Exception theoriquement impossible car on demande un indice de 0 sur un tableau de 1");
+        }
+        return false;
+    }
+    
 }

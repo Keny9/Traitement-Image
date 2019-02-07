@@ -4,15 +4,15 @@ import java.io.File;
 
 /**
  * 
- * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ * @author Karl Boutin, Maxime Lussier et Anthony Cï¿½tï¿½
  * Classe qui nous permet de manipuler une image poour la modifier
- * Telle que changer la luminosité de l'image, copier le contenu d'une image
- * dans une autre image ou même changer la rotation de l'image.
+ * Telle que changer la luminositï¿½ de l'image, copier le contenu d'une image
+ * dans une autre image ou mï¿½me changer la rotation de l'image.
  * 
  */
 public class ImageManipulator {
     
-    private Image img; //L'image à manipuler
+    private Image img; //L'image a manipuler
     
     /**
      The entry point of application.
@@ -32,7 +32,7 @@ public class ImageManipulator {
         return img;
     }
     /**
-     Appliquer une image à l'image
+     Appliquer une image ï¿½ l'image
      @param img l'image qu'on veut appliquer
      */
     public void setImg(Image img) {
@@ -42,15 +42,15 @@ public class ImageManipulator {
     
     
     /**
-     Ouvre en lecture le fichier en format PGM ou PPM spécifié et charge les données dans l’image
+     Ouvre en lecture le fichier en format PGM ou PPM spï¿½cifiï¿½ et charge les donnï¿½es dans lï¿½image
      @param i l'image
-     @param f le fichier dans lequel on lit les données
+     @param f le fichier dans lequel on lit les donnï¿½es
      */
     public void lire(Image i, File f) {
     
     }
     /**
-     Ouvre le fichier spécifié et y sauvegarde en format PGM ou PPM l’image
+     Ouvre le fichier spï¿½cifiï¿½ et y sauvegarde en format PGM ou PPM lï¿½image
      @param f le fichier dans lequel on veut ecrire les donnees
      @param i l'image qui va nous permettre d'ecrire dans le fichier
      */
@@ -59,7 +59,7 @@ public class ImageManipulator {
     }
     
     /**
-     Prend l’objet i1 et fait une copie dans l’objet i2
+     Prend lï¿½objet i1 et fait une copie dans lï¿½objet i2
      @param i1 the 1 L'image qu'on copie
      @param i2 the 2 L'image dans lequel on colle les donnees
      */
@@ -67,15 +67,15 @@ public class ImageManipulator {
     
     }
     /**
-     Retournera la couleur prépondérante de l’image i
+     Retournera la couleur prï¿½pondï¿½rante de lï¿½image i
      @param i L'image dans laquelle on veut recuperer la couleur dominante de l'image
      */
     public void couleur_preponderante(Image i) {
     
     }
     /**
-     Modifie la valeur de chaque pixel de l’image d’une valeur spécifiée, 
-     * si v est positif, l’image devient plus noire, si v est négatif, l’image devient plus claire
+     Modifie la valeur de chaque pixel de lï¿½image dï¿½une valeur spï¿½cifiï¿½e, 
+     * si v est positif, lï¿½image devient plus noire, si v est nï¿½gatif, lï¿½image devient plus claire
      @param i L'image dans laquelle on veut changer la luminosite
      @param v the v L'intensite qu'on veut appliquer a l'image
      */
@@ -84,7 +84,7 @@ public class ImageManipulator {
     }
     
     /**
-     Extraire un sous ensemble de l’image partir de du point p1,c1 jusqu’à p2,c2
+     Extraire un sous ensemble de lï¿½image partir de du point p1,c1 jusquï¿½ï¿½ p2,c2
      @param i  L'image dans laquelle on veut extraire les donnees
      @param x1  Position x debut dans fichier
      @param y1  Position y debut dans fichier

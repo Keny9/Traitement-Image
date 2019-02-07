@@ -2,7 +2,7 @@ package file;
 
 /**
  * Classe qui instancie un fichier PPM
- * @author Karl Boutin, Maxime Lussier et Anthony Côté
+ * @author Karl Boutin, Maxime Lussier et Anthony Cote
  */
 public class PPMFile extends Image {
 
