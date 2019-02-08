@@ -71,7 +71,7 @@ public class ImageManipulator {
      @param i L'image dans laquelle on veut recuperer la couleur dominante de l'image
      */
     public void couleur_preponderante(Image i) {
-    
+    i.couleur_preponderante();
     }
     /**
      Modifie la valeur de chaque pixel de l�image d�une valeur sp�cifi�e, 
@@ -80,7 +80,7 @@ public class ImageManipulator {
      @param v the v L'intensite qu'on veut appliquer a l'image
      */
     public void eclaircir_noircir(Image i, int v) {
-    
+        i.eclaircir_noircir(v);
     }
     
     /**
@@ -93,7 +93,7 @@ public class ImageManipulator {
      * Ce qui nous donnera une zone dans laquelle on veut recuperer les donnees
      */
     public void extraire(Image i, int x1, int y1, int x2, int y2) {
-    
+        i.extraire( x1, y1,x2, y2);
     }
     /**
      Reduire une image i1 a une image i2
@@ -101,7 +101,7 @@ public class ImageManipulator {
      @param i L'image qu'on veut reduire
      */
     public void reduire(Image i) {
-    
+    i.reduire();
     }
     /**
      Verfifie si 2 images sont identiques
@@ -116,7 +116,7 @@ public class ImageManipulator {
      @param i L'image dans laquelle on fait une rotation
      */
     public void pivoter90(Image i) {
-    
+    i.pivoter90();
     }
     
     @Override

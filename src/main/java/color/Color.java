@@ -7,9 +7,9 @@ public class Color implements Pixel {
     int[] pigment = { 0, 0, 0 };
     
     // Index de pigment
-    private static int RED;
-    private static int GREEN;
-    private static int BLUE;
+    private static final int RED = 0;
+    private static final int GREEN = 1;
+    private static final int BLUE = 2;
     
     
     public Color(){
@@ -103,7 +103,7 @@ public class Color implements Pixel {
         
     }
     
-    @Override
+    
     public void setPigment(int index, int value) throws Exception {
         
         validatePigmentIndex(index);
@@ -111,10 +111,10 @@ public class Color implements Pixel {
         pigment[index] = value;
     }
     
-    @Override
+    
     public int getAverage() { return (pigment[RED] + pigment[GREEN] + pigment[BLUE]) / 3; }
     
-    @Override
+    
     public boolean equals(Pixel p) {
         
         if (p.getClass() != Color.class) return false;
