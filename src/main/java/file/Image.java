@@ -17,10 +17,11 @@ public class Image {
     
     private FileReader                    fileImage;
     private BufferedReader                br;
-    private String                        line;
+    private String                        filename;
     private ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
     private int                           nbrRow;
     private int                           nbrCol;
+    private int                           maxValue;
     
     Image(){
     
@@ -46,8 +47,13 @@ public class Image {
     public void lire() {
         
         // Lire l'entete
+        /*
+        setNbrCol();
         
+        setNbrRow();
         
+        maxValue = fileImage.
+        */
         
         // Lire la matrice
         for (int r = 0; r < getNbrRow(); r++) {
@@ -260,6 +266,7 @@ public class Image {
         cl.resizeMatrice(getNbrRow()/2, getNbrCol()/2);
         int[] pigments = {0,0,0};
         
+        // Gere tous les pixel de l'image reduite
         for (int c = 0; c < cl.getNbrCol(); c++) {
             for (int r = 0; r < cl.getNbrRow(); r++) {
                 
@@ -269,19 +276,26 @@ public class Image {
                 for (int i = 0; i < getNbrPigment(); i++) {
                     
                     // Retrouve un pigment des 4 cases
-                    int v = get(r*2,c*2).getPigment(i);
+                    int nbrPigments =1;
                     
-                    if (r*2 < getNbrRow() - 1)
-                        v = get(r*2+1,c*2).getPigment(i);
+                    int totalValue = get(r*2,c*2).getPigment(i);
                     
-                    if (c*2 < getNbrCol() - 1)
-                        v = get(r*2,c*2+1).getPigment(i);
+                    if (r*2 < getNbrRow() - 1) {
+                        totalValue += get(r * 2 + 1, c * 2).getPigment(i);
+                        nbrPigments++;
+                    }
+                    if (c*2 < getNbrCol() - 1){
+                        totalValue += get(r*2,c*2+1).getPigment(i);
+                        nbrPigments++;
+                    }
                         
-                    if ((r*2 < getNbrRow() - 1) && (c*2 < getNbrCol() - 1))
-                        v = get(r*2+1,c*2+1).getPigment(i);
+                    if ((r*2 < getNbrRow() - 1) && (c*2 < getNbrCol() - 1)){
+                        totalValue += get(r*2+1,c*2+1).getPigment(i);
+                        nbrPigments++;
+                    }
                     
                     try {
-                        p.setPigment(i, v);
+                        p.setPigment(i, totalValue / nbrPigments);
                     }catch(Exception e){
                         System.err.println(e.toString());
                     }
@@ -300,15 +314,15 @@ public class Image {
      @param i1 1 image qu'on veut comparer
      @param i2 la deuxieme image qu'on veut comparer
      */
-    public boolean sont_identique(Image i1, Image i2) {
+    public static boolean sont_identique(Image i1, Image i2) {
         
         // Verify les dimension
         if (i1.getNbrRow() != i2.getNbrRow() || i1.getNbrCol() != i2.getNbrCol() )
             return false;
         
         // Verify les pixels
-        for (int r = 0; r < getNbrRow(); r++) {
-            for (int c = 0; c < getNbrCol(); c++) {
+        for (int r = 0; r < i1.getNbrRow(); r++) {
+            for (int c = 0; c < i1.getNbrCol(); c++) {
                 if (i1.get(r,c).equals(i2.get(r, c)))
                     return false;
             }
@@ -321,27 +335,46 @@ public class Image {
      */
     public void pivoter90() {
     
-        Image i;
+        Image cl = clone();
         
-        // Clone
-        try {
-            i = clone();
-            
-            // Pivote
-            for (int r = 0; r < getNbrRow(); r++) {
-                for (int c = 0; c < getNbrCol(); c++) {
-                    
-                    Pixel p = get(c, getNbrRow() - r);
-                    i.set(r, c, p);
-                    
-                }
+        // Pivote
+        for (int r = 0; r < getNbrRow(); r++) {
+            for (int c = 0; c < getNbrCol(); c++) {
+                
+                Pixel p = get(c, getNbrRow() - r);
+                cl.set(r, c, p);
             }
-        }catch (CloneNotSupportedException e){
-            System.err.println(e.toString());
+        }
+
+        matrice = cl.matrice;
+    }
+    /**
+     Rempli l'image avec un pixel
+     @param p pixel
+     */
+    public void fill(Pixel p) {
+    
+        for (int r = 0; r < getNbrRow(); r++) {
+            for (int c = 0; c < getNbrCol(); c++) {
+                set(r,c, p.clone());
+            }
         }
     }
     
-    public Image clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
+    
+    @Override
+    public Image clone() {
+        
+        // Cree une nouvelle image de meme taille
+        Image cl = new Image();
+        cl.resizeMatrice(getNbrRow(), getNbrCol());
+        
+        // Clone les pixels
+        for (int r = 0; r < getNbrRow(); r++) {
+            for (int c = 0; c < getNbrCol(); c++) {
+                cl.set(r,c, get(r,c).clone());
+            }
+        }
+        return cl;
     }
 }

@@ -109,7 +109,7 @@ public class ImageManipulator {
      @param i2 la deuxieme image qu'on veut comparer
      */
     public void sont_identique(Image i1, Image i2) {
-    
+        Image.sont_identique(i1, i2);
     }
     /**
      Pivoter l'image d'une rotation de 90 
