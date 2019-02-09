@@ -1,5 +1,8 @@
 package color;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  @author Karl Boutin, Maxime Lussier et Anthony Cote */
 public class Color implements Pixel {
@@ -120,12 +123,19 @@ public class Color implements Pixel {
         if (p.getClass() != Color.class) return false;
         
         try {
-            return (pigment[RED] == p.getPigment(RED) && pigment[GREEN] == p.getPigment(GREEN) && pigment[BLUE] == p.getPigment(BLUE));
+    
+            for (int i = 0; i < getNbrPigment(); i++) {
+                if (pigment[i] != p.getPigment(i))
+                    return false;
+            }
+            
+            return true;
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
-            System.out.println("Exception theoriquement impossible car on demande un indice de 0 sur un tableau de 1");
+            System.err.println("Exception theoriquement impossible car on demande un indice de 0 sur un tableau de 1");
         }
         return false;
     }
+
     
 }

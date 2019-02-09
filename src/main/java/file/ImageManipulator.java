@@ -47,7 +47,7 @@ public class ImageManipulator {
      @param f le fichier dans lequel on lit les donn�es
      */
     public void lire(Image i, File f) {
-    
+        i.lire(f);
     }
     /**
      Ouvre le fichier sp�cifi� et y sauvegarde en format PGM ou PPM l�image

@@ -1,5 +1,8 @@
 package color;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  * Interface qui permet de get et de set les donnees d'un pixel
  * @author Karl Boutin, Maxime Lussier et Anthony C�t�
@@ -53,4 +56,22 @@ public interface Pixel {
     }
     
     boolean equals(Pixel p);
+    
+    /**
+     
+     @param br
+     */
+    default void read(BufferedReader br){
+        try {
+            
+            for (int i = 0; i < getNbrPigment(); i++) {
+                setPigment(i, br.read());
+            }
+    
+        }catch (IOException e){
+            System.err.println(e.toString());
+        }catch (Exception e){
+            System.err.println(e.toString());
+        }
+    }
 }

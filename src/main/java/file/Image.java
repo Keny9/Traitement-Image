@@ -1,13 +1,13 @@
 package file;
 
+import color.Color;
+import color.Monochrome;
 import color.Pixel;
+import jdk.jshell.spi.ExecutionControl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
-import static java.util.Collections.swap;
 
 
 /**
@@ -18,11 +18,16 @@ public class Image {
     private FileReader                    fileImage;
     private BufferedReader                br;
     private String                        filename;
-    private ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
+    
+    private String                        type;
     private int                           nbrRow;
     private int                           nbrCol;
+    private ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
     private int                           maxValue;
     
+    /**
+     Constructeur
+     */
     Image(){
     
     }
@@ -44,25 +49,67 @@ public class Image {
     /**
      Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
-    public void lire() {
+    public void lire(File f) {
         
-        // Lire l'entete
-        /*
-        setNbrCol();
         
-        setNbrRow();
-        
-        maxValue = fileImage.
-        */
-        
-        // Lire la matrice
-        for (int r = 0; r < getNbrRow(); r++) {
-            for (int c = 0; c < getNbrCol(); c++) {
-                // Read Pixel
+        try {
+
+            br = new BufferedReader(new FileReader(filename));
+
+            String sCurrentLine;
+
+            // Lire l'entete
+            
+            type = br.readLine().trim();
+            
+            setNbrCol(br.read());
+            
+            setNbrRow(br.read());
+            
+            maxValue = br.read();
+            
+            
+            // Lire la matrice
+            for (int r = 0; r < getNbrRow(); r++) {
+                for (int c = 0; c < getNbrCol(); c++) {
+                    
+                    Pixel p = createPixel();
+                    
+                    p.read(br);
+                    
+                    set(r, c, p);
+                }
             }
+            
+            while ((sCurrentLine = br.readLine()) != null) {
+                System.out.println(sCurrentLine);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
     }
+    
+    /** Cree un pixel a partir du string de type (Factory)
+     @return bon type de pixel
+     */
+    public Pixel createPixel(){
+        try {
+            if (type == "P1")
+                throw new ExecutionControl.NotImplementedException("Format PBM est reconnu mais il n'est pas gerer");
+            else if (type == "P2")
+                return new Monochrome();
+            else if (type == "P3")
+                return new Color();
+            else
+                throw new ExecutionControl.NotImplementedException("Type de fichier inconnu");
+        }catch(ExecutionControl.NotImplementedException e){
+            System.err.println(e.toString());
+        }
+        return null;
+    }
+    
+
     
     /**
      Modifie les donnees d'une image
@@ -84,50 +131,53 @@ public class Image {
 
     
     
-    /**
-     Get
-     @param r ligne
+    /** Get pixel a partir de l'index de row et colonne
+     @param r row
      @param c colonne
      @return
      */
-    public Pixel get(int r, int c) {
-        
-        return matrice.get(r).get(c);
-    }
+    public Pixel get(int r, int c) { return matrice.get(r).get(c);    }
     
-    /**
-     Set
-     @param r ligne
+    /** Change le pixel a la position specifiee
+     @param r row
      @param c colonne
      @param p pixel
      */
-    public void set(int r, int c, Pixel p) {
-        
-        matrice.get(r).set(c, p);
-    }
+    public void set(int r, int c, Pixel p) { matrice.get(r).set(c, p);    }
     
-    /**
+    /** Retourne le nombre de ligne dans la matrice
      @return nombre de ligne dans la matrice     */
-    public int getNbrRow() { return nbrRow; }
-    /**
-     @return nombre de colonne dans la matrice     */
+    public int getNbrRow() { return matrice.size(); }
+    
+    /** Retourne le nombre de colonne dans la matrice
+     @return nombre de colonne      */
     public int getNbrCol() { return nbrCol; }
-    /**
-     @param nbrRow nombre de lignes dans la matrice     */
-    public void setNbrRow(int nbrRow) { this.nbrRow = nbrRow; }
+    
+    
+    /** Change le nombre de ligne  dans la matrice
+     @param nbrRow nombre de lignes     */
+    public void setNbrRow(int nbrRow) {
+        
+        while (nbrRow > getNbrRow())
+            matrice.remove( matrice.size()-1);
+        
+        while (nbrRow < getNbrRow()) {
+            matrice.add(new ArrayList <>(getNbrCol()));
+        }
+    }
 
-    /**
-     @param nbrCol nombre de colonne dans la matrice     */
+    /** Change le nombre de colonne dans la matrice
+     @param nbrCol nombre de colonne      */
     public void setNbrCol(int nbrCol) { this.nbrCol = nbrCol; }
     
-    /**
-     
+    /** Redimensionne la matrice
      @param nbrRow nombre de ligne dans la matrice
      @param nbrCol nombre de colonne dans la matrice
      */
     public void resizeMatrice(int nbrRow, int nbrCol){
         
-        ArrayList <ArrayList <Pixel>> temp;
+        setNbrRow(nbrRow);
+        setNbrCol(nbrCol);
         
     }
     
@@ -186,8 +236,8 @@ public class Image {
     }
     
     /**
-     
-     @return
+     Retourne le nombre total de pixel dans l'image
+     @return nombre de pixel
      */
     public int getNbrPixel(){
         return getNbrRow() * getNbrCol();
@@ -348,6 +398,7 @@ public class Image {
 
         matrice = cl.matrice;
     }
+    
     /**
      Rempli l'image avec un pixel
      @param p pixel
