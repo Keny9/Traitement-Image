@@ -73,5 +73,9 @@ public class Monochrome implements Pixel{
         return false;
     }
     
-    
+    @Override
+    public String toString() {
+        
+        return "Monochrome{" + "grey=" + grey + '}';
+    }
 }

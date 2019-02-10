@@ -1,9 +1,6 @@
 package image;
 
-import color.Color;
-import color.Monochrome;
 import color.Pixel;
-import jdk.jshell.spi.ExecutionControl;
 import other.Helper;
 
 import java.io.*;
@@ -21,8 +18,6 @@ public class Image {
     private String                        filename;
     
     private String                        type;
-    private int                           nbrRow;
-    private int                           nbrCol;
     private ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
     private int                           maxValue;
     
@@ -67,7 +62,7 @@ public class Image {
                     
                     Pixel p = createPixel();
                     p.read(br); // Demande au pixel de s'occupper de lire ses valeurs avec le reader
-                    set(r, c, p);
+                    setPixel(r, c, p);
                 }
             }
             
@@ -83,7 +78,7 @@ public class Image {
     /** Cree un pixel a partir du string de type (Factory)
      @return bon type de pixel
      */
-    public Pixel createPixel(){        return get(0,0).clone();    }
+    public Pixel createPixel(){ return getPixel(0,0).clone(); }
     
 
     
@@ -105,7 +100,7 @@ public class Image {
         // Ajoute la matrice
         for (int r = 0; r < getNbrRow(); r++) {
             for (int c = 0; c < getNbrCol(); c++) {
-                strBld.append(get(r,c).toString());
+                strBld.append(getPixel(r,c).toString());
             }
         }
 
@@ -120,14 +115,14 @@ public class Image {
      @param c colonne
      @return
      */
-    public Pixel get(int r, int c) { return matrice.get(r).get(c);    }
+    public Pixel getPixel(int r, int c) { return matrice.get(r).get(c);    }
     
     /** Change le pixel a la position specifiee
      @param r row
      @param c colonne
      @param p pixel
      */
-    public void set(int r, int c, Pixel p) { matrice.get(r).set(c, p);    }
+    public void setPixel(int r, int c, Pixel p) { matrice.get(r).set(c, p);    }
     
     /** Retourne le nombre de ligne dans la matrice
      @return nombre de ligne dans la matrice     */
@@ -135,16 +130,18 @@ public class Image {
     
     /** Retourne le nombre de colonne dans la matrice
      @return nombre de colonne      */
-    public int getNbrCol() { return nbrCol; }
+    public int getNbrCol() { return matrice.get(0).size(); }
     
     
     /** Change le nombre de ligne  dans la matrice
      @param nbrRow nombre de lignes     */
     public void setNbrRow(int nbrRow) {
         
+        // Enleve les ligne de trop
         while (nbrRow > getNbrRow())
             matrice.remove( matrice.size()-1);
         
+        // Ajoute les lignes qui manque
         while (nbrRow < getNbrRow()) {
             matrice.add(new ArrayList <>(getNbrCol()));
         }
@@ -152,7 +149,22 @@ public class Image {
 
     /** Change le nombre de colonne dans la matrice
      @param nbrCol nombre de colonne      */
-    public void setNbrCol(int nbrCol) { this.nbrCol = nbrCol; }
+    public void setNbrCol(int nbrCol) {
+    
+        for ( ArrayList<Pixel> eachRow : matrice ) {
+            
+            // Enleve les colonnes de trop
+            while (nbrCol > getNbrCol())
+                eachRow.remove( eachRow.size()-1);
+            
+            //Ajoute les colonnes qui manque
+            while (nbrCol < getNbrCol())
+                eachRow.add(createPixel());
+            
+            
+        }
+        
+    }
     
     /** Redimensionne la matrice
      @param nbrRow nombre de ligne dans la matrice
@@ -169,7 +181,7 @@ public class Image {
      
      @return
      */
-    public int getNbrPigment(){ return get(0,0).getNbrPigment();    }
+    public int getNbrPigment(){ return getPixel(0,0).getNbrPigment();    }
     
     
     /**
@@ -196,7 +208,7 @@ public class Image {
     
                 // Lit les valeurs du pixel
                 for (int i = 0; i < getNbrPigment(); i++) {
-                    total_pigment[i] += get(r,c).getPigment(i);
+                    total_pigment[i] += getPixel(r,c).getPigment(i);
                 }
             }
         }
@@ -234,11 +246,11 @@ public class Image {
                 for (int c = 0; c < getNbrCol(); c++) {
     
                     //
-                    Pixel cl = get(r, c).clone();
+                    Pixel cl = getPixel(r, c).clone();
                     for (int p = 0; p < cl.getNbrPigment(); p++) {
                         cl.setPigment(p, cl.getPigment(p) - v);
                     }
-                    set(r, c, cl);
+                    setPixel(r, c, cl);
                 }
             }
         }catch (Exception e){
@@ -280,7 +292,7 @@ public class Image {
         for (int c = 0; c < newCol; c++) {
             for (int r = 0; r < newRow; r++) {
                 
-                i.set(r, c, get(r,c).clone()); // Copie le pixel
+                i.setPixel(r, c, getPixel(r,c).clone()); // Copie le pixel
                 
             }
         }
@@ -307,19 +319,19 @@ public class Image {
                     // Retrouve un pigment des 4 cases
                     int nbrPigments =1;
                     
-                    int totalValue = get(r*2,c*2).getPigment(i);
+                    int totalValue = getPixel(r*2,c*2).getPigment(i);
                     
                     if (r*2 < getNbrRow() - 1) {
-                        totalValue += get(r * 2 + 1, c * 2).getPigment(i);
+                        totalValue += getPixel(r * 2 + 1, c * 2).getPigment(i);
                         nbrPigments++;
                     }
                     if (c*2 < getNbrCol() - 1){
-                        totalValue += get(r*2,c*2+1).getPigment(i);
+                        totalValue += getPixel(r*2,c*2+1).getPigment(i);
                         nbrPigments++;
                     }
                         
                     if ((r*2 < getNbrRow() - 1) && (c*2 < getNbrCol() - 1)){
-                        totalValue += get(r*2+1,c*2+1).getPigment(i);
+                        totalValue += getPixel(r*2+1,c*2+1).getPigment(i);
                         nbrPigments++;
                     }
                     
@@ -330,7 +342,7 @@ public class Image {
                     }
                 }
                 
-                cl.set(r, c, p); // Copie le pixel
+                cl.setPixel(r, c, p); // Copie le pixel
                 
             }
         }
@@ -352,7 +364,7 @@ public class Image {
         // Verify les pixels
         for (int r = 0; r < i1.getNbrRow(); r++) {
             for (int c = 0; c < i1.getNbrCol(); c++) {
-                if (i1.get(r,c).equals(i2.get(r, c)))
+                if (i1.getPixel(r,c).equals(i2.getPixel(r, c)))
                     return false;
             }
         }
@@ -370,8 +382,8 @@ public class Image {
         for (int r = 0; r < getNbrRow(); r++) {
             for (int c = 0; c < getNbrCol(); c++) {
                 
-                Pixel p = get(c, getNbrRow() - r);
-                cl.set(r, c, p);
+                Pixel p = getPixel(c, getNbrRow() - r);
+                cl.setPixel(r, c, p);
             }
         }
 
@@ -386,7 +398,7 @@ public class Image {
     
         for (int r = 0; r < getNbrRow(); r++) {
             for (int c = 0; c < getNbrCol(); c++) {
-                set(r,c, p.clone());
+                setPixel(r,c, p.clone());
             }
         }
     }
@@ -402,9 +414,15 @@ public class Image {
         // Clone les pixels
         for (int r = 0; r < getNbrRow(); r++) {
             for (int c = 0; c < getNbrCol(); c++) {
-                cl.set(r,c, get(r,c).clone());
+                cl.setPixel(r,c, getPixel(r,c).clone());
             }
         }
         return cl;
+    }
+    
+    @Override
+    public String toString() {
+        
+        return "Image{" + "fileImage=" + fileImage + ", br=" + br + ", filename='" + filename + '\'' + ", type='" + type + '\'' + ", matrice=" + matrice + ", maxValue=" + maxValue + '}';
     }
 }

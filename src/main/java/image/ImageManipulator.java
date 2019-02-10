@@ -27,18 +27,12 @@ public class ImageManipulator {
      
      @return l'image en manipulation
      */
-    public Image getImg() {
-        
-        return img;
-    }
+    public Image getImg() { return img; }
     /**
      Appliquer une image � l'image
      @param img l'image qu'on veut appliquer
      */
-    public void setImg(Image img) {
-        
-        this.img = img;
-    }
+    public void setImg(Image img) { this.img = img; }
     
     
     /**
@@ -55,7 +49,7 @@ public class ImageManipulator {
      @param i l'image qui va nous permettre d'ecrire dans le fichier
      */
     public void ecrire(File f, Image i) {
-    
+        i.ecrire(f.getPath());
     }
     
     /**
@@ -71,7 +65,7 @@ public class ImageManipulator {
      @param i L'image dans laquelle on veut recuperer la couleur dominante de l'image
      */
     public void couleur_preponderante(Image i) {
-    i.couleur_preponderante();
+        i.couleur_preponderante();
     }
     /**
      Modifie la valeur de chaque pixel de l�image d�une valeur sp�cifi�e, 
