@@ -20,14 +20,6 @@ public class Monochrome implements Pixel{
     }
 
 
-    public Pixel getPixel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setPixel(Pixel pixel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     @Override
     public Pixel clone() {
         

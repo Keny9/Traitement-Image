@@ -29,8 +29,7 @@ public interface Pixel {
     
     int getAverage();
     
-    /**
-     
+    /** Lance une exception si l'index de pigment est invalide
      @param index
      @return toujours vrai tant qu'il n'y a pas d'exception
      @throws ArrayIndexOutOfBoundsException
@@ -42,24 +41,22 @@ public interface Pixel {
         return true;
     }
     
-    /**
-     
+    /**     Lance une exception si la force du pigmet est invalide
      @param tone
      @return toujours vrai tant qu'il n'y a pas d'exception
      @throws InstantiationException
      */
     default boolean validatePigmentTone(int tone) throws InstantiationException{
         if(0 > tone || 255 <= tone)
-            throw new InstantiationException("L'index de pigment est invalide");
+            throw new InstantiationException("La valeur de pigment est invalide");
         
         return true;
     }
     
     boolean equals(Pixel p);
     
-    /**
-     
-     @param br
+    /** Lit le pixel dans le buffer
+     @param br BufferedReader
      */
     default void read(BufferedReader br){
         try {
@@ -71,6 +68,20 @@ public interface Pixel {
         }catch (IOException e){
             System.err.println(e.toString());
         }catch (Exception e){
+            System.err.println(e.toString());
+        }
+    }
+    
+    /** Remet a zero les pigments du pixel
+     */
+    default void clear() {
+        try {
+            
+            for (int i = 0; i < getNbrPigment(); i++) {
+                setPigment(i, 0);
+            }
+    
+        }catch (Exception e) {
             System.err.println(e.toString());
         }
     }

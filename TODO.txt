@@ -20,7 +20,7 @@ Classes:
 
     FilePPM : File
 
-file.ImageManipulator
+image.ImageManipulator
 
 convert command
 convert nom.jpg -compress none nom.pgm

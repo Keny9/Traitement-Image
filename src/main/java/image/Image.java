@@ -1,4 +1,4 @@
-package file;
+package image;
 
 import color.Color;
 import color.Monochrome;
@@ -93,21 +93,7 @@ public class Image {
     /** Cree un pixel a partir du string de type (Factory)
      @return bon type de pixel
      */
-    public Pixel createPixel(){
-        try {
-            if (type == "P1")
-                throw new ExecutionControl.NotImplementedException("Format PBM est reconnu mais il n'est pas gerer");
-            else if (type == "P2")
-                return new Monochrome();
-            else if (type == "P3")
-                return new Color();
-            else
-                throw new ExecutionControl.NotImplementedException("Type de fichier inconnu");
-        }catch(ExecutionControl.NotImplementedException e){
-            System.err.println(e.toString());
-        }
-        return null;
-    }
+    public Pixel createPixel(){        return get(0,0).clone();    }
     
 
     
@@ -185,9 +171,7 @@ public class Image {
      
      @return
      */
-    public int getNbrPigment(){
-        return get(0,0).getNbrPigment();
-    }
+    public int getNbrPigment(){         return get(0,0).getNbrPigment();    }
     
     
     /**
@@ -220,7 +204,7 @@ public class Image {
             }
         }
         
-        Pixel p = get(0,0).clone();
+        Pixel p = createPixel();
         
         //Calcule les valeurs
         try{
@@ -239,9 +223,7 @@ public class Image {
      Retourne le nombre total de pixel dans l'image
      @return nombre de pixel
      */
-    public int getNbrPixel(){
-        return getNbrRow() * getNbrCol();
-    }
+    public int getNbrPixel(){        return getNbrRow() * getNbrCol();    }
     
     /**
      Modifie la valeur de chaque pixel de l'image d'une valeur specifiee,
@@ -320,7 +302,7 @@ public class Image {
         for (int c = 0; c < cl.getNbrCol(); c++) {
             for (int r = 0; r < cl.getNbrRow(); r++) {
                 
-                Pixel p = get(0,0).clone();
+                Pixel p = createPixel();
     
                 
                 for (int i = 0; i < getNbrPigment(); i++) {

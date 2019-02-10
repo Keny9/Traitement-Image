@@ -78,16 +78,6 @@ public class Color implements Pixel {
         return "Color{" + "RED=" + pigment[RED] + ", GREEN=" + pigment[GREEN] + ", BLUE=" + pigment[BLUE] + '}';
     }
     
-    public Pixel getPixel() {
-        
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    public void setPixel(Pixel pixel) {
-        
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
     @Override
     public Pixel clone() {
         try {
