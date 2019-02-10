@@ -4,6 +4,7 @@ import color.Color;
 import color.Monochrome;
 import color.Pixel;
 import jdk.jshell.spi.ExecutionControl;
+import other.Helper;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -50,33 +51,22 @@ public class Image {
      Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
     public void lire(File f) {
-        
-        
         try {
-
             br = new BufferedReader(new FileReader(filename));
-
             String sCurrentLine;
 
             // Lire l'entete
-            
             type = br.readLine().trim();
-            
             setNbrCol(br.read());
-            
             setNbrRow(br.read());
-            
             maxValue = br.read();
-            
             
             // Lire la matrice
             for (int r = 0; r < getNbrRow(); r++) {
                 for (int c = 0; c < getNbrCol(); c++) {
                     
                     Pixel p = createPixel();
-                    
-                    p.read(br);
-                    
+                    p.read(br); // Demande au pixel de s'occupper de lire ses valeurs avec le reader
                     set(r, c, p);
                 }
             }
@@ -100,18 +90,26 @@ public class Image {
     /**
      Modifie les donnees d'une image
      */
-    public void ecrire() {
+    public void ecrire(String filename) {
         
-        // Ecrit entete
+        StringBuilder strBld = new StringBuilder();
         
+        // Ajoute l'entete
+        strBld.append(type)
+                .append("\r\n")
+                .append(getNbrRow())
+                .append(" ")
+                .append(getNbrCol())
+                .append("\r\n");
         
-        // Ecrit la matrice
+        // Ajoute la matrice
         for (int r = 0; r < getNbrRow(); r++) {
             for (int c = 0; c < getNbrCol(); c++) {
-            
+                strBld.append(get(r,c).toString());
             }
         }
 
+        Helper.writeToFile(strBld.toString(), filename);
     }
 
 
@@ -171,7 +169,7 @@ public class Image {
      
      @return
      */
-    public int getNbrPigment(){         return get(0,0).getNbrPigment();    }
+    public int getNbrPigment(){ return get(0,0).getNbrPigment();    }
     
     
     /**
@@ -183,8 +181,7 @@ public class Image {
     
     }
     
-    /**     Retournera la couleur preponderante de l'image i
-     */
+    /** Retournera la couleur preponderante de l'image i */
     public void couleur_preponderante() {
     
         int[] total_pigment = {0,0,0};
