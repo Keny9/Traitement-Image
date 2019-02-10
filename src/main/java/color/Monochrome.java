@@ -14,8 +14,7 @@ public class Monochrome implements Pixel{
     
     }
     
-    public Monochrome(int grey) throws InstantiationException{
-        validatePigmentTone(grey);
+    public Monochrome(int grey){
         this.grey = grey;
     }
 
@@ -26,8 +25,6 @@ public class Monochrome implements Pixel{
         try {
             super.clone();
             return new Monochrome(grey);
-        }catch (InstantiationException e){
-            e.printStackTrace();
         }catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -39,26 +36,24 @@ public class Monochrome implements Pixel{
     
     public int getPigment(int index) throws ArrayIndexOutOfBoundsException {
         
-        validatePigmentIndex(index);
+        //validatePigmentIndex(index);
         
         return grey;
     }
     
+    public int getGrey(){        return grey;    }
     
-    
+    public void setGrey(int value)  {        grey = value;     }
     
     public void setPigment(int index, int value) throws Exception {
     
-        validatePigmentIndex(index);
-        validatePigmentTone(value);
+        //validatePigmentIndex(index);
+        //validatePigmentTone(value);
         
         grey = value;
     }
     
-    public int getAverage() {
-        
-        return grey;
-    }
+    public int getAverage() {  return grey;    }
     
     public boolean equals(Pixel p) {
         

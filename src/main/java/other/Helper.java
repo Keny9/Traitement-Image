@@ -11,11 +11,14 @@ public class Helper {
      @param outputFile nom du fichier a ecrire a l'interieur
      */
     public static void writeToFile(String content, String outputFile) {
+    
         try {
             PrintWriter writer = new PrintWriter(outputFile, "UTF-8");
             writer.println(content);
             writer.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

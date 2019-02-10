@@ -61,7 +61,7 @@ public class Image {
                 for (int c = 0; c < getNbrCol(); c++) {
                     
                     Pixel p = createPixel();
-                    p.read(br); // Demande au pixel de s'occupper de lire ses valeurs avec le reader
+                    //p.read(br); // Demande au pixel de s'occupper de lire ses valeurs avec le reader
                     setPixel(r, c, p);
                 }
             }
@@ -143,7 +143,7 @@ public class Image {
         
         // Ajoute les lignes qui manque
         while (nbrRow < getNbrRow()) {
-            matrice.add(new ArrayList <>(getNbrCol()));
+            matrice.add(new ArrayList <Pixel>(getNbrCol()));
         }
     }
 

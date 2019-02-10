@@ -1,5 +1,6 @@
 package color;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class Color implements Pixel {
      @param g the g
      @param b the b
      */
-    public Color(int r, int g, int b) throws Exception{
+    public Color(int r, int g, int b) {
         
         setRed(r);
         setGreen(g);
@@ -56,26 +57,24 @@ public class Color implements Pixel {
      Sets r.
      @param r the r
      */
-    public void setRed(int r) throws Exception { setPigment(RED, r); }
+    public void setRed(int r)   { pigment[RED]= r; }
     /**
      Sets g.
      @param g the g
      */
-    public void setGreen(int g) throws Exception { setPigment(GREEN, g); }
+    public void setGreen(int g)   { pigment[GREEN]= g; }
     /**
      Sets b.
      @param b the b
      */
-    public void setBlue(int b) throws Exception { setPigment(BLUE, b); }
-    /**
-     @return
-     */
+    public void setBlue(int b)   { pigment[BLUE]= b; }
+
     
     
     @Override
     public String toString() {
         
-        return "Color{" + "RED=" + pigment[RED] + ", GREEN=" + pigment[GREEN] + ", BLUE=" + pigment[BLUE] + '}';
+        return "Color{" + "red=" + pigment[RED] + ", green=" + pigment[GREEN] + ", blue=" + pigment[BLUE] + '}';
     }
     
     @Override
@@ -91,7 +90,7 @@ public class Color implements Pixel {
     
     public int getPigment(int index) throws ArrayIndexOutOfBoundsException {
         
-        validatePigmentIndex(index);
+        //validatePigmentIndex(index);
         return pigment[index];
         
     }
@@ -99,8 +98,8 @@ public class Color implements Pixel {
     
     public void setPigment(int index, int value) throws Exception {
         
-        validatePigmentIndex(index);
-        validatePigmentTone(value);
+        //validatePigmentIndex(index);
+        //validatePigmentTone(value);
         pigment[index] = value;
     }
     

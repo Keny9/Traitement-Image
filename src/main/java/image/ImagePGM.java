@@ -3,7 +3,7 @@ package image;
 import color.Color;
 import color.Monochrome;
 import color.Pixel;
-import jdk.jshell.spi.ExecutionControl;
+//import jdk.jshell.spi.ExecutionControl;
 
 /**
  * Classe qui instancie une image PGM
