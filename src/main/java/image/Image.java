@@ -6,20 +6,18 @@ import other.Helper;
 import java.io.*;
 import java.util.ArrayList;
 
-
-
 /**
- Classe qui g�re une image et ses pixels
- @author Karl Boutin, Maxime Lussier et Anthony C�t� */
+ Classe qui gere une image et ses pixels
+ @author Karl Boutin, Maxime Lussier et Anthony Cote */
 public class Image {
     
-    private FileReader                    fileImage;
-    private BufferedReader                br;
-    private String                        filename;
+    protected FileReader                    fileImage;
+    protected BufferedReader                br;
+    protected String                        filename;
     
-    private String                        type;
-    private ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
-    private int                           maxValue;
+    protected String                        type;
+    protected ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
+    protected int                           maxValue;
     
     /**
      Constructeur
@@ -46,42 +44,16 @@ public class Image {
      Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
     public void lire(File f) {
-        try {
-            br = new BufferedReader(new FileReader(filename));
-            String sCurrentLine;
-
-            // Lire l'entete
-            type = br.readLine().trim();
-            setNbrCol(br.read());
-            setNbrRow(br.read());
-            maxValue = br.read();
-            
-            // Lire la matrice
-            for (int r = 0; r < getNbrRow(); r++) {
-                for (int c = 0; c < getNbrCol(); c++) {
-                    
-                    Pixel p = createPixel();
-                    //p.read(br); // Demande au pixel de s'occupper de lire ses valeurs avec le reader
-                    setPixel(r, c, p);
-                }
-            }
-            
-            while ((sCurrentLine = br.readLine()) != null) {
-                System.out.println(sCurrentLine);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
     }
     
     /** Cree un pixel a partir du string de type (Factory)
      @return bon type de pixel
      */
-    public Pixel createPixel(){ return getPixel(0,0).clone(); }
-    
+    public Pixel createPixel(){
+        return getPixel(0,0).clone(); 
+    }
 
-    
     /**
      Modifie les donnees d'une image
      */
@@ -107,9 +79,6 @@ public class Image {
         Helper.writeToFile(strBld.toString(), filename);
     }
 
-
-    
-    
     /** Get pixel a partir de l'index de row et colonne
      @param r row
      @param c colonne
@@ -160,8 +129,6 @@ public class Image {
             //Ajoute les colonnes qui manque
             while (nbrCol < getNbrCol())
                 eachRow.add(createPixel());
-            
-            
         }
         
     }
@@ -174,7 +141,6 @@ public class Image {
         
         setNbrRow(nbrRow);
         setNbrCol(nbrCol);
-        
     }
     
     /**
@@ -224,15 +190,13 @@ public class Image {
         }catch(Exception e){
             System.err.println(e.toString());
         }
-
-
     }
     
     /**
      Retourne le nombre total de pixel dans l'image
      @return nombre de pixel
      */
-    public int getNbrPixel(){        return getNbrRow() * getNbrCol();    }
+    public int getNbrPixel(){ return getNbrRow() * getNbrCol();}
     
     /**
      Modifie la valeur de chaque pixel de l'image d'une valeur specifiee,

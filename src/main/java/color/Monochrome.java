@@ -1,5 +1,8 @@
 package color;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
 /**
  * 
  * @author Karl Boutin, Maxime Lussier et Anthony Cote
@@ -72,5 +75,63 @@ public class Monochrome implements Pixel{
     public String toString() {
         
         return "Monochrome{" + "grey=" + grey + '}';
+    }
+    
+    /**
+     Lance une exception si l'index de pigment est invalide
+     @param index the index
+     @return toujours vrai tant qu'il n'y a pas d'exception
+     @throws ArrayIndexOutOfBoundsException the array index out of bounds exception
+     */
+    public boolean validatePigmentIndex(int index) throws ArrayIndexOutOfBoundsException{
+        if(0 > index || index >= getNbrPigment())
+            throw new ArrayIndexOutOfBoundsException("L'index de pigment est invalide");
+
+        return true;
+    }
+    
+     /**
+     Lance une exception si la force du pigmet est invalide
+     @param tone the tone
+     @return toujours vrai tant qu'il n'y a pas d'exception
+     @throws InstantiationException the instantiation exception
+     */
+    public boolean validatePigmentTone(int tone) throws InstantiationException{
+        if(0 > tone || 255 <= tone)
+            throw new InstantiationException("La valeur de pigment est invalide");
+
+        return true;
+    }
+    
+     /**
+     Lit le pixel dans le buffer
+     @param br BufferedReader*/
+     public void read(BufferedReader br){
+        try {
+
+            for (int i = 0; i < getNbrPigment(); i++) {
+                setPigment(i, br.read());
+            }
+
+        }catch (IOException e){
+            System.err.println(e.toString());
+        }catch (Exception e){
+            System.err.println(e.toString());
+        }
+    }
+     
+     /**
+     Remet a zero les pigments du pixel
+     */
+    public void clear() {
+        try {
+
+            for (int i = 0; i < getNbrPigment(); i++) {
+                setPigment(i, 0);
+            }
+
+        }catch (Exception e) {
+            System.err.println(e.toString());
+        }
     }
 }

@@ -20,7 +20,8 @@ public class ImageManipulator {
      */
     public static void main(String[] args) {
         
-        System.out.println("Hi");
+        
+       
     }
     
     /**
@@ -29,20 +30,21 @@ public class ImageManipulator {
      */
     public Image getImg() { return img; }
     /**
-     Appliquer une image � l'image
+     Appliquer une image a l'image
      @param img l'image qu'on veut appliquer
      */
     public void setImg(Image img) { this.img = img; }
     
     
     /**
-     Ouvre en lecture le fichier en format PGM ou PPM sp�cifi� et charge les donn�es dans l�image
+     Ouvre en lecture le fichier en format PGM ou PPM specifie et charge les donn�es dans l�image
      @param i l'image
      @param f le fichier dans lequel on lit les donn�es
      */
     public void lire(Image i, File f) {
         i.lire(f);
     }
+    
     /**
      Ouvre le fichier sp�cifi� et y sauvegarde en format PGM ou PPM l�image
      @param f le fichier dans lequel on veut ecrire les donnees
@@ -89,6 +91,7 @@ public class ImageManipulator {
     public void extraire(Image i, int x1, int y1, int x2, int y2) {
         i.extraire( x1, y1,x2, y2);
     }
+    
     /**
      Reduire une image i1 a une image i2
      * Reduit la taille de l'image
@@ -97,6 +100,7 @@ public class ImageManipulator {
     public void reduire(Image i) {
     i.reduire();
     }
+    
     /**
      Verfifie si 2 images sont identiques
      @param i1 1 image qu'on veut comparer
@@ -105,6 +109,7 @@ public class ImageManipulator {
     public void sont_identique(Image i1, Image i2) {
         Image.sont_identique(i1, i2);
     }
+    
     /**
      Pivoter l'image d'une rotation de 90 
      @param i L'image dans laquelle on fait une rotation
