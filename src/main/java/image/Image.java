@@ -2,6 +2,7 @@ package image;
 
 import color.Pixel;
 import other.Helper;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,53 +12,58 @@ import java.util.ArrayList;
  @author Karl Boutin, Maxime Lussier et Anthony Cote */
 public class Image {
     
-    protected FileReader                    fileImage;
-    protected BufferedReader                br;
-    protected String                        filename;
+    protected File           file;
+    protected FileReader     fileReader;
+    protected BufferedReader br;
+    protected String         filename;
     
     protected String                        type;
-    protected ArrayList <ArrayList <Pixel>> matrice;  //Le tableau de pixel
+    protected ArrayList <ArrayList <Pixel>> matrice = new ArrayList <ArrayList <Pixel>>(1);  //Le tableau de pixel
     protected int                           maxValue;
     
-    /**
-     Constructeur
-     */
-    Image(){
-    
+    /**     Constructeur     */
+    Image(){    }
+
+    /**     Constructeur d'une image     */
+    Image(String nomFichier) throws FileNotFoundException{
+        filename = nomFichier;
+        file = new File(nomFichier);
+        fileReader = new FileReader(filename);
+    }
+
+    /**     Constructeur d'une image     */
+    Image(File file) throws FileNotFoundException{
+        this.file = file;
+        fileReader = new FileReader(file);
     }
     
-    /**
-     Constructeur d'une image
+        /**
+     Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
-    Image(String nomFichier) {
-        
-    }
-    
-    /**
-     Constructeur d'une image
-     */
-    Image(File file) {
-    
-    }
+    public void lire() { lire(file); } // Voir sous classes
     
     /**
      Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
-    public void lire(File f) {
-        
-    }
+    public void lire(File f) { throw new NotImplementedException(); } // Voir sous classes
     
     /** Cree un pixel a partir du string de type (Factory)
      @return bon type de pixel
      */
-    public Pixel createPixel(){
-        return getPixel(0,0).clone(); 
+    private static Pixel createPixel(){
+        throw new NotImplementedException();// pas besoin puiquon herite
+        //return getPixel(0,0).clone();
     }
 
     /**
      Modifie les donnees d'une image
      */
     public void ecrire(String filename) {
+        
+        Helper.writeToFile(toStringFile(), filename);
+    }
+    
+    public String toStringFile(){
         
         StringBuilder strBld = new StringBuilder();
         
@@ -67,17 +73,23 @@ public class Image {
                 .append(getNbrRow())
                 .append(" ")
                 .append(getNbrCol())
+                .append("\r\n")
+                .append(getTypeString())
                 .append("\r\n");
         
         // Ajoute la matrice
         for (int r = 0; r < getNbrRow(); r++) {
             for (int c = 0; c < getNbrCol(); c++) {
-                strBld.append(getPixel(r,c).toString());
+                strBld.append(getPixel(r,c).toString())
+                        .append(" ");
             }
+            strBld.append("\r\n");
         }
-
-        Helper.writeToFile(strBld.toString(), filename);
+        
+        return strBld.toString();
     }
+    
+    public static String getTypeString(){ throw new NotImplementedException(); }
 
     /** Get pixel a partir de l'index de row et colonne
      @param r row
@@ -95,11 +107,20 @@ public class Image {
     
     /** Retourne le nombre de ligne dans la matrice
      @return nombre de ligne dans la matrice     */
-    public int getNbrRow() { return matrice.size(); }
+    public int getNbrRow() {
+        
+        if (matrice == null) return 0;
+        
+        return matrice.size(); }
     
     /** Retourne le nombre de colonne dans la matrice
      @return nombre de colonne      */
-    public int getNbrCol() { return matrice.get(0).size(); }
+    public int getNbrCol() {
+        
+        if (matrice == null) return 0;
+        if (matrice.get(0) == null) return 0;
+        
+        return matrice.get(0).size(); }
     
     
     /** Change le nombre de ligne  dans la matrice
@@ -107,8 +128,9 @@ public class Image {
     public void setNbrRow(int nbrRow) {
         
         // Enleve les ligne de trop
-        while (nbrRow > getNbrRow())
-            matrice.remove( matrice.size()-1);
+        while (nbrRow > getNbrRow()) {
+            matrice.remove(matrice.size() - 1);
+        }
         
         // Ajoute les lignes qui manque
         while (nbrRow < getNbrRow()) {
@@ -147,7 +169,7 @@ public class Image {
      
      @return
      */
-    public int getNbrPigment(){ return getPixel(0,0).getNbrPigment();    }
+    public static int getNbrPigment(){ return createPixel().getNbrPigment();    }
     
     
     /**
@@ -156,7 +178,9 @@ public class Image {
      @param i2 the 2 L'image dans lequel on colle les donnees
      */
     public void copier(Image i1, Image i2) {
-    
+        i1.lire();
+        
+        i1.ecrire(i2.filename);
     }
     
     /** Retournera la couleur preponderante de l'image i */
@@ -257,7 +281,6 @@ public class Image {
             for (int r = 0; r < newRow; r++) {
                 
                 i.setPixel(r, c, getPixel(r,c).clone()); // Copie le pixel
-                
             }
         }
     }
@@ -276,7 +299,6 @@ public class Image {
             for (int r = 0; r < cl.getNbrRow(); r++) {
                 
                 Pixel p = createPixel();
-    
                 
                 for (int i = 0; i < getNbrPigment(); i++) {
                     
@@ -305,12 +327,9 @@ public class Image {
                         System.err.println(e.toString());
                     }
                 }
-                
                 cl.setPixel(r, c, p); // Copie le pixel
-                
             }
         }
-        
         return cl;
     }
     
@@ -387,6 +406,6 @@ public class Image {
     @Override
     public String toString() {
         
-        return "Image{" + "fileImage=" + fileImage + ", br=" + br + ", filename='" + filename + '\'' + ", type='" + type + '\'' + ", matrice=" + matrice + ", maxValue=" + maxValue + '}';
+        return "Image{" + "fileReader=" + fileReader + ", br=" + br + ", filename='" + filename + '\'' + ", type='" + type + '\'' + ", matrice=" + matrice + ", maxValue=" + maxValue + '}';
     }
 }

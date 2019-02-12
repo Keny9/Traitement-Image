@@ -20,50 +20,50 @@ class ImageManipulatorTest {
     }
     @Test
     void getImg() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void setImg() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void lire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void ecrire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void copier() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void couleur_preponderante() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void eclaircir_noircir() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void extraire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void reduire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void sont_identique() {
         
         Color c1 = new Color(128,64,32);
         Color c2 = new Color(128,64,32);
-        Assertions.assertTrue( c1.equals(c2));
+        assertTrue( c1.equals(c2));
     }
     @Test
     void pivoter90() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void toString_test() {

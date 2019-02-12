@@ -3,10 +3,8 @@ package image;
 import color.Color;
 import color.Monochrome;
 import color.Pixel;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 
 /**
  * Classe qui instancie une image PGM
@@ -14,29 +12,25 @@ import java.io.IOException;
  */
 public class ImagePGM extends Image {
 
+    ImagePGM(){}
+    
     /**
      * Constructeur d'image PGM
      * @param fichier 
      */
-    ImagePGM(String fichier){
-        super(fichier);
-    }
+    ImagePGM(String fichier) throws FileNotFoundException {        super(fichier);    }
     
-     /** Cree un pixel a partir du string de type (Factory)
-     @return bon type de pixel
-     */
-    @Override
-    public Pixel createPixel(){
-
-        return new Monochrome();
-    }
+    /** Cree un pixel a partir du string de type (Factory)
+    @return bon type de pixel
+    */
+    public static Pixel createPixel(){        return new Monochrome();    }
     
     /**
      Lit un fichier pour collecter les donnees de l'image dans un tableau
      */
     public void lire(File f) {
         try {
-            br = new BufferedReader(new FileReader(filename));
+            br = new BufferedReader(new FileReader(f));
             String sCurrentLine;
 
             // Lire l'entete
@@ -55,14 +49,9 @@ public class ImagePGM extends Image {
                 }
             }
             
-            while ((sCurrentLine = br.readLine()) != null) {
-                System.out.println(sCurrentLine);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
     
-    
+    /** Retourne le code du format de fichier pour la sauvegarde dans un fichier */
+    public static String getTypeString(){ return "P2";}
 }

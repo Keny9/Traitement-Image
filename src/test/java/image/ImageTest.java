@@ -1,5 +1,6 @@
 package image;
 
+import color.Monochrome;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,100 +10,142 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ImageTest {
     
+    ImagePGM i;
+    
     @BeforeEach
     void setUp() {
-    
+        i = new ImagePGM();
     }
     @AfterEach
     void tearDown() {
     
     }
+    
+    
     @Test
     void lire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void createPixel() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void ecrire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void getPixel() {
-        Assertions.fail();
+        
+        
+        fail();
     }
     @Test
     void setPixel() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void getNbrRow() {
-        Assertions.fail();
+        
+        assertEquals(1, i.getNbrRow());
+        fail();
     }
     @Test
     void getNbrCol() {
-        Assertions.fail();
+        
+        assertEquals(1, i.getNbrCol());
+        fail();
     }
     @Test
     void setNbrRow() {
-        Assertions.fail();
+        
+        i.setNbrRow(3);
+        assertEquals(3, i.getNbrRow());
     }
     @Test
     void setNbrCol() {
-        Assertions.fail();
+        
+        i.setNbrCol(3);
+        assertEquals(3, i.getNbrCol());
     }
     @Test
     void resizeMatrice() {
-        Assertions.fail();
+        i.resizeMatrice(3,4);
+        
+        assertEquals(3, i.getNbrRow());
+        assertEquals(4, i.getNbrCol());
     }
     @Test
     void getNbrPigment() {
-        Assertions.fail();
+        
+        assertEquals(1,  ImagePGM.getNbrPigment());
+        assertEquals(3,  ImagePPM.getNbrPigment());
+        
     }
     @Test
     void copier() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void couleur_preponderante() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void getNbrPixel() {
-        Assertions.fail();
+        
+        i.resizeMatrice(3,7);
+        assertEquals(21, i.getNbrPixel());
     }
     @Test
     void eclaircir_noircir() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void extraire() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void reduire() {
-        Assertions.fail();
+        
+        i.resizeMatrice( 4,8);
+        i.reduire();
+        
+        assertEquals(2, i.getNbrRow());
+        assertEquals(4, i.getNbrCol());
     }
     @Test
     void sont_identique() {
-        Assertions.fail();
+        
+        ImagePGM i2 = new ImagePGM();
+        
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 5; c++) {
+                assertSame (i2.getPixel(r,c), i.getPixel(r,c));
+            }
+        }
     }
     @Test
     void pivoter90() {
-        Assertions.fail();
+        fail();
     }
     @Test
     void fill() {
-        Assertions.fail();
+        i.resizeMatrice( 4,5);
+        Monochrome p = new Monochrome(128);
+        i.fill(p);
+    
+        for (int r = 0; r < 4; r++) {
+            for (int c = 0; c < 5; c++) {
+                assertSame (p, i.getPixel(r,c));
+            }
+        }
     }
     @Test
     void clone_test() {
-
+        fail();
     }
     @Test
     void toString_test() {
-
+        fail();
     }
 }

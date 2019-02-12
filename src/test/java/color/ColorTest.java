@@ -10,9 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ColorTest {
     
+    Color c;
+    
     @BeforeEach
     void setUp() {
-    
+        c = new Color(10,20,30);
     }
     @AfterEach
     void tearDown() {
@@ -22,25 +24,24 @@ class ColorTest {
     
     @Test
     void toString_test() {
-        Color c = new Color(1,2,3);
-        String expected = "Color{red=1, green=2, blue=3}";
-        Assertions.assertEquals(expected, c.toString());
+        
+        String expected = "Color{red=10, green=20, blue=30}";
+        assertEquals(expected, c.toString());
     }
     @Test
     void clone_test() {
-
+        fail();
     }
     @Test
     void getAverage() throws Exception{
-        Color c = new Color(30,20,10);
-        Assertions.assertEquals(20, c.getAverage(), "Average");
+        
+        assertEquals(20, c.getAverage(), "Average");
     }
     @Test
     void equals() throws Exception {
-        Color c = new Color(255,128,0);
-    
-        Assertions.assertEquals(255 , c.getRed(), "Red");
-        Assertions.assertEquals(128 , c.getGreen(), "Green");
-        Assertions.assertEquals(0 , c.getBlue(), "Blue");
+        
+        assertEquals(10 , c.getRed(), "Red");
+        assertEquals(20 , c.getGreen(), "Green");
+        assertEquals(30 , c.getBlue(), "Blue");
     }
 }

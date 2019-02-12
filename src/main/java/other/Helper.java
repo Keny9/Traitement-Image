@@ -22,4 +22,8 @@ public class Helper {
             e.printStackTrace();
         }
     }
+    
+    public static String endl(){
+        return System.getProperty ("line.separator");
+    }
 }
