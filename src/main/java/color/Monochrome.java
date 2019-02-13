@@ -9,105 +9,54 @@ public class Monochrome implements Pixel{
     int grey;                   //Valeur du pixel
     public static final int NBR_PIGMENTS = 1; // 1 int equivaut a un pixel
     
-    /** Instantiates a new Monochrome. */
+    /** Constructeur sans parametre. */
     public Monochrome() {
     
     }
     
+    /**
+     * Constructeur avec parametre
+     * @param grey 
+     */
     public Monochrome(int grey){
         this.grey = grey;
     }
-
-
-    @Override
-    public Pixel clone() {
-        
-        try {
-            super.clone();
-            return new Monochrome(grey);
-        }catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        return new Monochrome();
-    }
     
+    /**
+     * Retourne le nombre de pigment par pixel
+     * @return 1 (image en gris tout le temps un pigment de couleur par pixel qui est le gris)
+     */
     public int getNbrPigment() { return NBR_PIGMENTS; }
     
-    
+    /**
+     * Obtenir le pigment du pixel
+     * @param index 
+     * @return
+     * @throws ArrayIndexOutOfBoundsException 
+     */
     public int getPigment(int index) throws ArrayIndexOutOfBoundsException {
-        
-        //validatePigmentIndex(index);
-        
         return grey;
     }
     
+    /**
+     * Retourne la valeur du pigment
+     * @return 
+     */
     public int getGrey(){return grey;}
     
+    /**
+     * Set une valeur au pigment de gris
+     * @param value 
+     */
     public void setGrey(int value){grey = value;}
     
+    /**
+     * Change la valeur dans le pigment
+     * @param index pas d'index dans le gris
+     * @param value a appliquer
+     * @throws Exception 
+     */
     public void setPigment(int index, int value) throws Exception {
         grey = value;
-    }
-    
-    public int getAverage() {  return grey;    }
-    
-    public boolean equals(Pixel p) {
-        
-        if (p.getClass() != Monochrome.class)
-            return false;
-        
-        try {
-            return grey == p.getPigment(0);
-        }catch (ArrayIndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-    
-    @Override
-    public String toString() {
-        
-        return "Monochrome{" + "grey=" + grey + '}';
-    }
-    
-    /**
-     Lance une exception si l'index de pigment est invalide
-     @param index the index
-     @return toujours vrai tant qu'il n'y a pas d'exception
-     @throws ArrayIndexOutOfBoundsException the array index out of bounds exception
-     */
-    public boolean validatePigmentIndex(int index) throws ArrayIndexOutOfBoundsException{
-        if(0 > index || index >= getNbrPigment())
-            throw new ArrayIndexOutOfBoundsException("L'index de pigment est invalide");
-
-        return true;
-    }
-    
-     /**
-     Lance une exception si la force du pigmet est invalide
-     @param tone the tone
-     @return toujours vrai tant qu'il n'y a pas d'exception
-     @throws InstantiationException the instantiation exception
-     */
-    public boolean validatePigmentTone(int tone) throws InstantiationException{
-        if(0 > tone || 255 <= tone)
-            throw new InstantiationException("La valeur de pigment est invalide");
-
-        return true;
-    }
-     
-     /**
-     Remet a zero les pigments du pixel
-     */
-    public void clear() {
-        try {
-
-            for (int i = 0; i < getNbrPigment(); i++) {
-                setPigment(i, 0);
-            }
-
-        }catch (Exception e) {
-            System.err.println(e.toString());
-        }
     }
 }

@@ -43,11 +43,12 @@ public class Traitement {
      @param i2 the 2 L'image dans lequel on colle les donnees
      */
     public static void copier(Image i1, Image i2) {
-       
+       Image.copier(i1, i2);
     }
     /**
      Retournera la couleur preponderante de l image i
      @param i L'image dans laquelle on veut recuperer la couleur dominante de l'image
+     * @return retourne le pixel dominant
      */
     public static Pixel couleur_preponderante(Image i) {
        // i.couleur_preponderante();
@@ -99,6 +100,6 @@ public class Traitement {
      @param i L'image dans laquelle on fait une rotation
      */
     public static void pivoter90(Image i) {
-        //i.pivoter90();
+        i.pivoter90();
     }
 }

@@ -23,4 +23,6 @@ public class ImagePGM extends Image {
     */
     public static Pixel createPixel(){return new Monochrome();}
     
+    public String getTypeString(){return "P2";}
+    
 }

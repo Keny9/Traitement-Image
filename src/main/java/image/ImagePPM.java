@@ -23,5 +23,7 @@ public class ImagePPM extends Image {
      @return bon type de pixel
      */
     public static Pixel createPixel(){return new Color();}
+    
+    public String getTypeString(){return "P3";}
    
 }

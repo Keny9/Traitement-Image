@@ -8,16 +8,17 @@ import java.util.ArrayList;
 
 
 /**
- Classe qui gere une image et ses pixels
+ Classe qui gere une image et ses pixels avec les diverses methodes qui permet de
+ * la manipuler
  @author Karl Boutin, Maxime Lussier et Anthony Cote */
 
-    
 public class Image{
+    
     private File           file;        // Le fichier de l'image
     private BufferedReader br;          // Buffer pour lire dans le fichier
     private String         nomFichier;  // Le nom du fichier
     private int            nbCol;       // Nb colonne inscrit dans le fichier
-    private int            nbRow;      // Nb ligne inscrit dans le fichier
+    private int            nbRow;       // Nb ligne inscrit dans le fichier
     private String         type;        // Le type de fichier
     private int            maxValue;    // La valeur maximale possible inscrite dans le fichier
 
@@ -48,14 +49,12 @@ public class Image{
             String sCurrentLine;
             
             // Lire l'entete
-            type = br.readLine().trim();
+            setType(br.readLine().trim());
             sCurrentLine = br.readLine();
             String arr[] = sCurrentLine.split(" ");
             setNbrCol(Integer.parseInt(arr[0]));
             setNbrRow(Integer.parseInt(arr[1]));
-            maxValue = Integer.parseInt(br.readLine());
-            
-           // int nbLineFile = 0; //Le nombre de ligne dans le fichier
+            setMaxValue(Integer.parseInt(br.readLine()));
             
             if(this instanceof ImagePGM){
 
@@ -92,11 +91,8 @@ public class Image{
                 sCurrentLine = br.readLine();
                 String temp[] = sCurrentLine.split(" ");
                 int pos = 0; //position dans l'array temp;
-                // while((sCurrentLine = br.readLine()) != null)
                  for (int row = 0; row < nbRow; row++)
                  {
-
-                   // String temp[] = sCurrentLine.split(" ");
                     matrice.add(new ArrayList<Pixel>());
 
                     for (int col = 0; col < nbCol; col++) {
@@ -196,22 +192,51 @@ public class Image{
     
     /**
      * Methode qui prend une image et qui la copie dans une autre
-     * @param i1
-     * @param i2 
+     * @param i1 L image qu on veut copier
+     * @param i2 L image dans laquelle on veut faire une copie de Image1
      */
-    public void copier(Image i1, Image i2) {
-     
-
-     
+    public static void copier(Image i1, Image i2) {
+        
+        Image temp;
+        
+        if (i1 instanceof ImagePGM){
+            i2 = new ImagePGM();
+            
+            i2.setType(i1.getTypeString());
+            i2.setNbrCol(i1.getNbrCol());
+            i2.setNbrRow(i1.getNbrRow());
+            
+            for(int row = 0; row < i2.getNbrRow(); row++){
+                i2.getMatrice().add(new ArrayList<Pixel>());
+                for (int col = 0; col < i2.getNbrCol(); col++){
+                    i2.getMatrice().get(row).add(i1.getPixel(row, col));
+                }
+            }
+        }
     }
     
-//    /** Cree un pixel a partir du string de type (Factory)
-//     @return bon type de pixel
-//     */
-//    private static Pixel createPixel(){
-//        throw new NotImplementedException();// pas besoin puiquon herite
-//        //return getPixel(0,0).clone();
-//    }
+    /**
+     * Trouve la couleur dominante de l'image
+     * @return 
+     */
+    public int couleur_preponderante() {
+       int prep[] = new int[256];
+
+       for (int row = 0; row < getNbrRow(); row++){
+           for (int col = 0; col < getNbrCol(); col++){
+               prep[getMatrice().get(row).get(col).getPigment(0)]++;
+           }
+       }
+
+       int max = 0;
+
+       for(int i = 0; i < 256; i++){
+           if(prep[i] > prep[max]){
+               max = i;
+           }
+       }
+       return max;
+    }
     
     /**
      * Obtenir le type de l'image
@@ -266,7 +291,7 @@ public class Image{
      * @return la valeur maximale
      */
     public int getMaxValue(){
-        return maxValue;
+        return 255;
     }
     
     
@@ -297,63 +322,6 @@ public class Image{
         this.matrice = matrice;
     }
     
-    /** Redimensionne la matrice
-     @param nbrRow nombre de ligne dans la matrice
-     @param nbrCol nombre de colonne dans la matrice
-     */
-//    public void resizeMatrice(int nbrRow, int nbrCol){
-//        
-//        setNbrRow(nbrRow);
-//        setNbrCol(nbrCol);
-//    }
-    
-    /**
-     
-     @return
-     */
-//    public static int getNbrPigment(){ return createPixel().getNbrPigment();    }
-    
-    
-    /**
-     Prend l�objet i1 et fait une copie dans l�objet i2
-     @param i1 the 1 L'image qu'on copie
-     @param i2 the 2 L'image dans lequel on colle les donnees
-     */
-
-    
-//    /** Retournera la couleur preponderante de l'image i */
-//    public void couleur_preponderante() {
-//    
-//        int[] total_pigment = {0,0,0};
-//    
-//        for (int i = 0; i < getNbrPigment(); i++) {
-//            total_pigment[i] = 0;
-//        }
-//        
-//        // Cumule les valeurs dans chaque pixel
-//        for (int c = 0; c < getNbrCol(); c++) {
-//            for (int r = 0; r < getNbrRow(); r++) {
-//    
-//                // Lit les valeurs du pixel
-//                for (int i = 0; i < getNbrPigment(); i++) {
-//                    total_pigment[i] += getPixel(r,c).getPigment(i);
-//                }
-//            }
-//        }
-//        
-//        Pixel p = createPixel();
-//        
-//        //Calcule les valeurs
-//        try{
-//            for (int i = 0; i < getNbrPigment(); i++) {
-//                p.setPigment(i, total_pigment[i] / getNbrPixel());
-//            }
-//        
-//        }catch(Exception e){
-//            System.err.println(e.toString());
-//        }
-//    }
-    
     /**
      Retourne le nombre total de pixel dans l'image
      @return nombre de pixel
@@ -368,114 +336,203 @@ public class Image{
      @param v the v L'intensite qu'on veut appliquer a l'image
      */
     public void eclaircir_noircir(int v) {
-        
+
         try {
-            for (int r = 0; r < getNbrRow(); r++) {
-                for (int c = 0; c < getNbrCol(); c++) {
-    
+
+            for ( ArrayList<Pixel> alP : matrice ) {
+                for ( Pixel p : alP ) {
+
                     // Change le pixel
-                    Pixel cl = getPixel(r, c).clone();
-                    for (int p = 0; p < cl.getNbrPigment(); p++) {
-                        
-                        int newPigment = Math.max(0, cl.getPigment(p) - v);
+
+                    for (int pigm = 0; pigm < p.getNbrPigment(); pigm++) {
+
+                        int newPigment = Math.max(0, p.getPigment(pigm) - v);
                         newPigment = Math.min(maxValue, newPigment);
-                        cl.setPigment(p, newPigment);
+                        p.setPigment(pigm, newPigment);
                     }
-                    setPixel(r, c, cl);
+
                 }
             }
+
+
         }catch (Exception e){
             System.err.println(e.toString());
         }
     }
     
     /**
-     Extraire un sous ensemble de l�image partir de du point p1,c1 jusqu�� p2,c2
+     Extraire un sous ensemble de l�image partir de du point p1,c1 jusqu a p2,c2
      @param c1  Position x debut dans fichier
      @param r1  Position y debut dans fichier
      @param c2  Position x fin dans fichier
      @param r2  Position y fin dans fichier
      * Ce qui nous donnera une zone dans laquelle on veut recuperer les donnees
      */
-//    public void extraire(int c1, int r1, int c2, int r2) {
-//        
-//        Image i = new Image();
-//        
-//        // S'assure que les valeur sont dans le bon ordre
-//        if (c1 > c2) {
-//            int temp = c1;
-//            c1 = c2;
-//            c2 = temp;
-//        }
-//        
-//        if (r1 > r2) {
-//            int temp = r1;
-//            r1 = r2;
-//            r2 = temp;
-//        }
-//        
-//        // Redimensionne la matrice
-//        int newRow = r2 - r1;
-//        int newCol = c2 - c1;
-//        i.resizeMatrice( newRow, newCol);
-//    
-//        // Transfert les pixel
-//        for (int c = 0; c < newCol; c++) {
-//            for (int r = 0; r < newRow; r++) {
-//                
-//                i.setPixel(r, c, getPixel(r,c).clone()); // Copie le pixel
-//            }
-//        }
-//    }
+    public Image extraire(int c1, int r1, int c2, int r2) {
+
+        Image i = new Image();
+
+        // S'assure que les valeur sont dans le bon ordre
+        if (c1 > c2) {
+            int temp = c1;
+            c1 = c2;
+            c2 = temp;
+        }
+
+        if (r1 > r2) {
+            int temp = r1;
+            r1 = r2;
+            r2 = temp;
+        }
+
+        // Redimensionne la matrice
+        int newRow = r2 - r1;
+        int newCol = c2 - c1;
+        i.setNbrCol(newCol);
+        i.setNbrRow(newRow);
+
+        if(this instanceof ImagePPM){
+            // Transfert les pixel
+            for (int r = 0; r < newRow; r++) {
+                i.getMatrice().add(new ArrayList<Pixel>());
+                for (int c = 0; c < newCol; c++) {
+                    i.getMatrice().get(r).add(getPixel(r,c));
+                }
+            }
+        }
+
+        if(this instanceof ImagePPM){
+            // Transfert les pixel
+            for (int r = 0; r < newRow; r++) {
+                for (int c = 0; c < newCol; c++) {
+                    i.getMatrice().add(new ArrayList<Pixel>());
+                    i.getMatrice().get(r).add(getPixel(r,c));
+                }
+            }
+        }
+
+        return i;
+    }
     
-    /**
-     Reduire une image i1 a une image i2
-     * Reduit la taille de l'image
-     */
-//    public Image reduire() {
-//    
-//        Image cl = new Image();
-//        cl.resizeMatrice(getNbrRow()/2, getNbrCol()/2);
-//        int[] pigments = {0,0,0};
-//        
-//        // Gere tous les pixel de l'image reduite
-//        for (int c = 0; c < cl.getNbrCol(); c++) {
-//            for (int r = 0; r < cl.getNbrRow(); r++) {
-//                
-//                Pixel p = createPixel();
-//                
-//                for (int i = 0; i < getNbrPigment(); i++) {
-//                    
-//                    // Retrouve un pigment des 4 cases
-//                    int nbrPigments =1;
-//                    
-//                    int totalValue = getPixel(r*2,c*2).getPigment(i);
-//                    
-//                    if (r*2 < getNbrRow() - 1) {
-//                        totalValue += getPixel(r * 2 + 1, c * 2).getPigment(i);
-//                        nbrPigments++;
-//                    }
-//                    if (c*2 < getNbrCol() - 1){
-//                        totalValue += getPixel(r*2,c*2+1).getPigment(i);
-//                        nbrPigments++;
-//                    }
-//                        
-//                    if ((r*2 < getNbrRow() - 1) && (c*2 < getNbrCol() - 1)){
-//                        totalValue += getPixel(r*2+1,c*2+1).getPigment(i);
-//                        nbrPigments++;
-//                    }
-//                    
-//                    try {
-//                        p.setPigment(i, totalValue / nbrPigments);
-//                    }catch(Exception e){
-//                        System.err.println(e.toString());
-//                    }
-//                }
-//                cl.setPixel(r, c, p); // Copie le pixel
-//            }
-//        }
-//        return cl;
-//    }
+   /**
+    * Methode qui reduit la dimension de l image
+    * @param i l image qu on veut reduire
+    * @return l image qui a ete reduit
+    */
+   public static Image reduire(Image i){
+       
+       int moyenne = 0;
+       
+        if (i instanceof ImagePGM){
+            ImagePGM cl = new ImagePGM();
+            cl.setNbrRow(i.getNbrRow()/2);
+            cl.setNbrCol(i.getNbrCol()/2);
+            for(int row = 0; row < cl.getNbrRow(); row++)
+            {
+                for (int col = 0; col < cl.getNbrCol(); col++)
+                {
+                    cl.getMatrice().add(new ArrayList<Pixel>());
+                    Monochrome p = new Monochrome();
+                    if (row == cl.getNbrRow()-1 && col == cl.getNbrCol()-1){
+                         moyenne =
+                                + i.getMatrice().get((row*2)).get(col*2).getPigment(0);
+                        
+                    }
+                    else if (row == cl.getNbrRow()-1){
+                         moyenne =
+                                + i.getMatrice().get((row*2)).get((col*2)+1).getPigment(0)
+                                + i.getMatrice().get((row*2)).get(col*2).getPigment(0);
+                        moyenne /= 2;
+                    }
+                    else if (col == cl.getNbrCol()-1){
+                         moyenne =
+                                + i.getMatrice().get((row*2)+1).get(col*2).getPigment(0)
+                                
+                                + i.getMatrice().get((row*2)).get(col*2).getPigment(0);
+                        moyenne /= 2;
+                    }
+                    else{
+                         moyenne = i.getMatrice().get((row*2)+1).get((col*2)+1).getPigment(0)
+                                + i.getMatrice().get((row*2)+1).get(col*2).getPigment(0)
+                                + i.getMatrice().get((row*2)).get((col*2)+1).getPigment(0)
+                                + i.getMatrice().get((row*2)).get(col*2).getPigment(0);
+                        moyenne /= 4;
+                    }
+                    
+                    try {
+                        p.setPigment(0,moyenne);
+                    } catch (Exception ex) {
+                        System.out.println("HEY CRISS");
+                    }
+                    try{
+                        cl.addPixel(row, col, p);
+                    }
+                    catch(IndexOutOfBoundsException ex){
+                        System.err.println("bug");
+                        System.out.println("row : " + row + " col : " + col + "moyenne: " + moyenne);
+                    }
+                }
+            }
+            return cl;
+        }
+        else if(i instanceof ImagePPM){
+            ImagePPM cl = new ImagePPM();
+            cl.setNbrRow(i.getNbrRow()/2);
+            cl.setNbrCol(i.getNbrCol()/2);
+            for(int row = 0; row < cl.getNbrRow(); row++)
+            {
+                for (int col = 0; col < cl.getNbrCol(); col++)
+                {
+                    cl.getMatrice().add(new ArrayList<Pixel>());
+                    Color p = new Color();
+                    // Pour le nombre de pigment dans un pixel color
+                    for (int pig = 0; pig < 3; pig++){
+                        if (row == cl.getNbrRow()-1 && col == cl.getNbrCol()-1){
+                            moyenne =
+                                    + i.getMatrice().get((row*2)).get(col*2).getPigment(pig);
+                            
+                        }
+                        else if (row == cl.getNbrRow()-1){
+                            moyenne =
+                                    + i.getMatrice().get((row*2)).get((col*2)+1).getPigment(pig)
+                                    + i.getMatrice().get((row*2)).get(col*2).getPigment(pig);
+                            moyenne /= 2;
+                        }
+                        else if (col == cl.getNbrCol()-1){
+                            moyenne =
+                                    + i.getMatrice().get((row*2)+1).get(col*2).getPigment(pig)
+                                    
+                                    + i.getMatrice().get((row*2)).get(col*2).getPigment(pig);
+                            moyenne /= 2;
+                        }
+                        else{
+                            moyenne = i.getMatrice().get((row*2)+1).get((col*2)+1).getPigment(pig)
+                                    + i.getMatrice().get((row*2)+1).get(col*2).getPigment(pig)
+                                    + i.getMatrice().get((row*2)).get((col*2)+1).getPigment(pig)
+                                    + i.getMatrice().get((row*2)).get(col*2).getPigment(pig);
+                            moyenne /= 4;
+                        }
+                        
+                        try {
+                            p.setPigment(pig,moyenne);
+                        } catch (Exception ex) {
+                            System.out.println("HEY CRISS");
+                        }
+                    }
+                    
+                    try{
+                        cl.addPixel(row, col, p);
+                    }
+                    catch(IndexOutOfBoundsException ex){
+                        System.err.println("bug");
+                        System.out.println("row : " + row + " col : " + col + "moyenne: " + moyenne);
+                    }
+                }
+            }
+            return cl;
+        }
+        return new Image();
+    }
     
     /**
      Verfifie si 2 images sont identiques
@@ -485,6 +542,11 @@ public class Image{
      */
     public static boolean sont_identique(Image i1, Image i2) {
         
+        //Si c'est le meme type d image
+        if(i1.getTypeString() != i2.getTypeString()){
+            return false;
+        }
+            
         //Verfier les lignes
         if(i1.getMatrice().size() != i2.getMatrice().size()){
             return false;
@@ -498,79 +560,97 @@ public class Image{
             }
         }
         
+       if(i1 instanceof ImagePGM){
         //Verifier les donnees
+         for(int i = 0; i < i1.getMatrice().size();i++){
+            for(int j = 0; j < i1.getMatrice().get(i).size();j++){
+                if( i1.getMatrice().get(i).get(j).getPigment(0) != i2.getMatrice().get(i).get(j).getPigment(0)){
+                    return false;
+                 }
+            }
+        }
+    }else {
+        //Verifier les donneesm PPM
         for(int i = 0; i < i1.getMatrice().size();i++){
             for(int j = 0; j < i1.getMatrice().get(i).size();j++){
-                if( i1.getMatrice().get(i).size() != i2.getMatrice().get(i).size()){
-                    return false;
+                for(int k = 0; k < 3;k++){
+                    if(i1.getMatrice().get(i).get(j).getPigment(k) != i2.getMatrice().get(i).get(j).getPigment(k)){
+                        return false;
+                    }
                 }
             }
         }
-        
+    }
+      
         return true;
-
-//        // Verifier les dimension
-//        if (i1.getNbrRow() != i2.getNbrRow() || i1.getNbrCol() != i2.getNbrCol() )
-//            return false;
-//        
-//        // Verifier les pixels
-//        for (int r = 0; r < i1.getNbrRow(); r++) {
-//            for (int c = 0; c < i1.getNbrCol(); c++) {
-//                if (i1.getPixel(r,c).equals(i2.getPixel(r, c)))
-//                    return false;
-//            }
-//        }
-//        return true;
     }
 
     
+   /**     Pivoter l'image d'une rotation de 90     */
+    public Image pivoter90() {
+
+        //first change the dimensions vertical length for horizontal length
+        //and viceversa
+        Image newImg;
+
+        if (this.getClass() == ImagePGM.class) {
+            newImg = new ImagePGM();
+            for (int row = 0; row < newImg.getNbrRow(); row++) {
+                for (int col = 0; col < newImg.getNbrCol(); col++) {
+                    newImg.setPixel(row, col, new Monochrome());
+                }
+            }
+        }else{
+            newImg = new ImagePPM();
+            for (int row = 0; row < newImg.getNbrRow(); row++) {
+                for (int col = 0; col < newImg.getNbrCol(); col++) {
+                    newImg.setPixel(row, col, new Color());
+                }
+            }
+        }
+
+        //invert values 90 degrees clockwise by starting from button of
+        //array to top and from left to right
+        newImg.setNbrCol(getNbrRow());
+        newImg.setNbrRow(getNbrCol());
+        int ii = 0;
+        int jj = 0;
+        for(int i=0; i< newImg.getNbrRow(); i++){
+            newImg.getMatrice().add(new ArrayList<Pixel>());
+            for(int j= 0 ; j < newImg.getNbrCol(); j++){
+                newImg.getMatrice().get(i).add(getMatrice().get(getNbrRow()- j - 1).get(i));
+            }
+        }
+        return newImg;
+    }
+
     /**
-     Pivoter l'image d'une rotation de 90
+     * @param type the type to set
      */
-//    public void pivoter90() {
-//    
-//        Image cl = clone();
-//        
-//        // Pivote
-//        for (int r = 0; r < getNbrRow(); r++) {
-//            for (int c = 0; c < getNbrCol(); c++) {
-//                
-//                Pixel p = getPixel(c, getNbrRow() - r);
-//                cl.setPixel(r, c, p);
-//            }
-//        }
-//
-//        matrice = cl.matrice;
-//    }
-    
+    public void setType(String type) {
+        this.type = type;
+    }
+
     /**
-     Rempli l'image avec un pixel
-     @param p pixel
+     * @param maxValue the maxValue to set
      */
-//    public void fill(Pixel p) {
-//    
-//        for (int r = 0; r < getNbrRow(); r++) {
-//            for (int c = 0; c < getNbrCol(); c++) {
-//                setPixel(r,c, p.clone());
-//            }
-//        }
-//    }
-    
-    
-//    @Override
-//    public Image clone() {
-//        
-//        // Cree une nouvelle image de meme taille
-//        Image cl = new Image();
-//        cl.resizeMatrice(getNbrRow(), getNbrCol());
-//        
-//        // Clone les pixels
-//        for (int r = 0; r < getNbrRow(); r++) {
-//            for (int c = 0; c < getNbrCol(); c++) {
-//                cl.setPixel(r,c, getPixel(r,c).clone());
-//            }
-//        }
-//        return cl;
-//    }
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    /**
+     * @return the file
+     */
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(File file) {
+        this.file = file;
+    }
 
 }
+

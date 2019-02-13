@@ -1,13 +1,10 @@
 package color;
 
-import java.io.BufferedReader;
 
 /**
  Interface qui permet de getPixel et de setPixel les donnees d'un pixel
- @author Karl Boutin, Maxime Lussier et Anthony C�t� */
+ @author Karl Boutin, Maxime Lussier et Anthony Cote */
 public interface Pixel {
-    
-    Pixel clone();
     
     /**
      Gets nbr pigment.
@@ -30,22 +27,5 @@ public interface Pixel {
      @throws Exception the exception
      */
     void setPigment(int index, int value) throws Exception;
-    
-    /**
-     Gets average.
-     @return the average
-     */
-    int getAverage();
-    
-    boolean validatePigmentIndex(int index);
-    
-    /**
-    Equals boolean.
-    @param p the p
-    @return the boolean
-    */
-    boolean equals(Pixel p);
-    
-    boolean validatePigmentTone(int tone)throws InstantiationException;
  
 }

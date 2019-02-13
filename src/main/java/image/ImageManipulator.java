@@ -1,8 +1,6 @@
 package image;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -21,17 +19,19 @@ public class ImageManipulator {
      */
     public static void main(String[] args) {
     
-        // OK
-        //test_lire_ecrire();
+        Image imag1 = new ImagePGM();
+        Image imag2 = new ImagePGM();
         
         
-        // BROKEN
-        //test_eclaircir();
-        //test_couleur_preponderante();
-        //test_extraire();
-        //test_reduire();
-        //test_sont_identiques();
-        //test_pivoter90();
+
+        test_lire_ecrire();
+        
+        test_eclaircir();
+        test_couleur_preponderante();
+        test_extraire();
+        test_reduire();
+        test_sont_identiques();
+        test_pivoter90();
     }
     
     
@@ -61,9 +61,9 @@ public class ImageManipulator {
         
 
         Image img1 = new ImagePGM();
-        Image img2 = new ImagePPM();
+        Image img2 = new ImagePGM();
         File file = new File("Sherbrooke_Frontenac_nuit.pgm"); //Pour lire une image pgm
-        File file2 = new File("Sherbrooke_Frontenac_nuit.ppm"); //Pour lire une image ppm
+        File file2 = new File("Sherbrooke_Frontenac_nuit2.pgm"); //Pour lire une image ppm
         
         Traitement.lire(img1,file);
         Traitement.lire(img2, file2);
@@ -129,9 +129,8 @@ public class ImageManipulator {
         Traitement.lire(img1,file);
         Traitement.lire(img2, file2);
     
-        System.out.println("Les couleurs preponderante sont : ");
-//        System.out.println(traitement.couleur_preponderante(img1));
-//        System.out.println(traitement.couleur_preponderante(img2));
+        System.out.println(img1.couleur_preponderante());
+
     }
     
     public static void test_eclaircir(){
