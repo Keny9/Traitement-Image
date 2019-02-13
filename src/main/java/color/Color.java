@@ -92,23 +92,6 @@ public class Color implements Pixel {
 
         return true;
     }
-    
-    /**
-     Lit le pixel dans le buffer
-     @param br BufferedReader*/
-     public void read(BufferedReader br){
-        try {
-
-            for (int i = 0; i < getNbrPigment(); i++) {
-                setPigment(i, br.read());
-            }
-
-        }catch (IOException e){
-            System.err.println(e.toString());
-        }catch (Exception e){
-            System.err.println(e.toString());
-        }
-    }
      
      /**
      Remet a zero les pigments du pixel

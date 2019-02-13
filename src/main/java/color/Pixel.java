@@ -46,8 +46,6 @@ public interface Pixel {
     */
     boolean equals(Pixel p);
     
-    void read(BufferedReader br);
-    
     boolean validatePigmentTone(int tone)throws InstantiationException;
  
 }

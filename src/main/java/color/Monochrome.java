@@ -9,8 +9,8 @@ import java.io.IOException;
  */
 public class Monochrome implements Pixel{
     
-    int grey;
-    public static final int NBR_PIGMENTS = 1;
+    int grey;       //Valeur du pixel
+    public static final int NBR_PIGMENTS = 1; // 1 int equivaut a un pixel
     
     /** Instantiates a new Monochrome. */
     public Monochrome() {
@@ -44,9 +44,9 @@ public class Monochrome implements Pixel{
         return grey;
     }
     
-    public int getGrey(){        return grey;    }
+    public int getGrey(){return grey;}
     
-    public void setGrey(int value)  {        grey = value;     }
+    public void setGrey(int value){grey = value;}
     
     public void setPigment(int index, int value) throws Exception {
     
@@ -101,23 +101,6 @@ public class Monochrome implements Pixel{
             throw new InstantiationException("La valeur de pigment est invalide");
 
         return true;
-    }
-    
-     /**
-     Lit le pixel dans le buffer
-     @param br BufferedReader*/
-     public void read(BufferedReader br){
-        try {
-
-            for (int i = 0; i < getNbrPigment(); i++) {
-                setPigment(i, br.read());
-            }
-
-        }catch (IOException e){
-            System.err.println(e.toString());
-        }catch (Exception e){
-            System.err.println(e.toString());
-        }
     }
      
      /**
