@@ -16,13 +16,13 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  @author Karl Boutin, Maxime Lussier et Anthony Cote */
 public class Image {
     
-    private File           file;    //Le fichier de l'image
-    private BufferedReader br;      //Buffer pour lire dans le fichier
-    private String         nomFichier; //Le nom du fichier
-    private int            nbCol;       //Nb colonne inscrit dans le fichier
-    private int            nbLine;      //Nb ligne inscrit dans le fichier
-    private String         type;        //Le type de fichier
-    private int            maxValue;    //La valeur maximale possible inscrite dans le fichier
+    private File           file;        // Le fichier de l'image
+    private BufferedReader br;          // Buffer pour lire dans le fichier
+    private String         nomFichier;  // Le nom du fichier
+    private int            nbCol;       // Nb colonne inscrit dans le fichier
+    private int            nbLine;      // Nb ligne inscrit dans le fichier
+    private String         type;        // Le type de fichier
+    private int            maxValue;    // La valeur maximale possible inscrite dans le fichier
     private ArrayList <ArrayList <Pixel>> matrice = new ArrayList <ArrayList <Pixel>>();  //Le tableau de pixel
     
     
@@ -358,10 +358,13 @@ public class Image {
             for (int r = 0; r < getNbrRow(); r++) {
                 for (int c = 0; c < getNbrCol(); c++) {
     
-                    //
+                    // Change le pixel
                     Pixel cl = getPixel(r, c).clone();
                     for (int p = 0; p < cl.getNbrPigment(); p++) {
-                        cl.setPigment(p, cl.getPigment(p) - v);
+                        
+                        int newPigment = Math.max(0, cl.getPigment(p) - v);
+                        newPigment = Math.min(maxValue, newPigment);
+                        cl.setPigment(p, newPigment);
                     }
                     setPixel(r, c, cl);
                 }

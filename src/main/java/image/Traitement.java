@@ -5,6 +5,9 @@
  */
 package image;
 
+import color.Monochrome;
+import color.Pixel;
+
 import java.io.File;
 
 /**
@@ -33,7 +36,7 @@ public class Traitement {
      @param i l'image
      @param f le fichier dans lequel on lit les donn�es
      */
-    public void  lire(Image i, File f) {
+    public static void  lire(Image i, File f) {
         i.lire(f);
     }
     
@@ -42,7 +45,7 @@ public class Traitement {
      @param f le fichier dans lequel on veut ecrire les donnees
      @param i l'image qui va nous permettre d'ecrire dans le fichier
      */
-    public void ecrire(File f, Image i) {
+    public static void ecrire(File f, Image i) {
         i.ecrire(f.getPath());
     }
     
@@ -51,15 +54,16 @@ public class Traitement {
      @param i1 the 1 L'image qu'on copie
      @param i2 the 2 L'image dans lequel on colle les donnees
      */
-    public void copier(Image i1, Image i2) {
+    public static void copier(Image i1, Image i2) {
        
     }
     /**
      Retournera la couleur preponderante de l image i
      @param i L'image dans laquelle on veut recuperer la couleur dominante de l'image
      */
-    public void couleur_preponderante(Image i) {
+    public static Pixel couleur_preponderante(Image i) {
        // i.couleur_preponderante();
+        return new Monochrome(); // TODO : retourner la vrai valeur
     }
     /**
      Modifie la valeur de chaque pixel de l�image d�une valeur specifiee, 
@@ -67,7 +71,7 @@ public class Traitement {
      @param i L'image dans laquelle on veut changer la luminosite
      @param v the v L'intensite qu'on veut appliquer a l'image
      */
-    public void eclaircir_noircir(Image i, int v) {
+    public static void eclaircir_noircir(Image i, int v) {
         i.eclaircir_noircir(v);
     }
     
@@ -80,7 +84,7 @@ public class Traitement {
      @param y2  Position y fin dans fichier
      * Ce qui nous donnera une zone dans laquelle on veut recuperer les donnees
      */
-    public void extraire(Image i, int x1, int y1, int x2, int y2) {
+    public static void extraire(Image i, int x1, int y1, int x2, int y2) {
        // i.extraire( x1, y1,x2, y2);
     }
     
@@ -89,7 +93,7 @@ public class Traitement {
      * Reduit la taille de l'image
      @param i L'image qu'on veut reduire
      */
-    public void reduire(Image i) {
+    public static void reduire(Image i) {
         //i.reduire();
     }
     
@@ -98,15 +102,15 @@ public class Traitement {
      @param i1 1 image qu'on veut comparer
      @param i2 la deuxieme image qu'on veut comparer
      */
-    public void sont_identique(Image i1, Image i2) {
-        Image.sont_identique(i1, i2);
+    public static boolean sont_identique(Image i1, Image i2) {
+        return Image.sont_identique(i1, i2);
     }
     
     /**
      Pivoter l'image d'une rotation de 90 
      @param i L'image dans laquelle on fait une rotation
      */
-    public void pivoter90(Image i) {
+    public static void pivoter90(Image i) {
         //i.pivoter90();
     }
 }
