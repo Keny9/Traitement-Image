@@ -174,14 +174,16 @@ public class ImageManipulator {
         System.out.println(img2.getNbrRow());
         System.out.println("");
         
-//        System.out.println("Contenue de l'image pgm");
-//        img1.affiche();
+        System.out.println("Contenue de l'image pgm");
+        img1.affiche();
 //        System.out.println("");
 //        System.out.println("Contenue de l'image ppm");     
 //        img2.affiche();
 
+
         Traitement.ecrire(file3, img1);
         Traitement.ecrire(file4, img2);
+
      
     }
     

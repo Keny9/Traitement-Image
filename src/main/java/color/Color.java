@@ -1,9 +1,7 @@
 package color;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 /**
+ * Classe qui gere un pixel de couleur
  @author Karl Boutin, Maxime Lussier et Anthony Cote */
 public class Color implements Pixel {
     
@@ -135,9 +133,6 @@ public class Color implements Pixel {
     
     
     public void setPigment(int index, int value) throws Exception {
-        
-        //validatePigmentIndex(index);
-        //validatePigmentTone(value);
         pigment[index] = value;
     }
     

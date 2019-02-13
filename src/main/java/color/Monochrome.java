@@ -1,15 +1,12 @@
 package color;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-
 /**
- * 
+ * Classe qui gere un pixel qui n est pas en couleur
  * @author Karl Boutin, Maxime Lussier et Anthony Cote
  */
 public class Monochrome implements Pixel{
     
-    int grey;       //Valeur du pixel
+    int grey;                   //Valeur du pixel
     public static final int NBR_PIGMENTS = 1; // 1 int equivaut a un pixel
     
     /** Instantiates a new Monochrome. */
@@ -49,10 +46,6 @@ public class Monochrome implements Pixel{
     public void setGrey(int value){grey = value;}
     
     public void setPigment(int index, int value) throws Exception {
-    
-        //validatePigmentIndex(index);
-        //validatePigmentTone(value);
-        
         grey = value;
     }
     

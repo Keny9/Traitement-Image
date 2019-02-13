@@ -18,23 +18,11 @@ import java.io.File;
  * dans une autre image ou meme changer la rotation de l'image.
  */
 public class Traitement {
-
-//    /**
-//     
-//     @return l'image en manipulation
-//     */
-//    public Image getImg() { return img; }
-//    /**
-//     Appliquer une image a l'image
-//     @param img l'image qu'on veut appliquer
-//     */
-//    public void setImg(Image img) { this.img = img; }
-    
     
     /**
      Ouvre en lecture le fichier en format PGM ou PPM specifie et charge les donnees dans l image
      @param i l'image
-     @param f le fichier dans lequel on lit les donn�es
+     @param f le fichier dans lequel on lit les donnees
      */
     public static void  lire(Image i, File f) {
         i.lire(f);
