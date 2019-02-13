@@ -355,20 +355,23 @@ public class Image {
     public void eclaircir_noircir(int v) {
         
         try {
-            for (int r = 0; r < getNbrRow(); r++) {
-                for (int c = 0; c < getNbrCol(); c++) {
     
+            for ( ArrayList<Pixel> alP : matrice ) {
+                for ( Pixel p : alP ) {
+                    
                     // Change le pixel
-                    Pixel cl = getPixel(r, c).clone();
-                    for (int p = 0; p < cl.getNbrPigment(); p++) {
+
+                    for (int pigm = 0; pigm < p.getNbrPigment(); pigm++) {
                         
-                        int newPigment = Math.max(0, cl.getPigment(p) - v);
+                        int newPigment = Math.max(0, p.getPigment(pigm) - v);
                         newPigment = Math.min(maxValue, newPigment);
-                        cl.setPigment(p, newPigment);
+                        p.setPigment(pigm, newPigment);
                     }
-                    setPixel(r, c, cl);
+
                 }
             }
+            
+
         }catch (Exception e){
             System.err.println(e.toString());
         }

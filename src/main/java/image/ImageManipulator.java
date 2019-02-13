@@ -26,7 +26,7 @@ public class ImageManipulator {
         
         
         // BROKEN
-        //test_eclaircir();
+        test_eclaircir();
         //test_couleur_preponderante();
         //test_extraire();
         //test_reduire();
@@ -148,8 +148,8 @@ public class ImageManipulator {
         Traitement.lire(img1,file);
         Traitement.lire(img2, file2);
         
-        Traitement.eclaircir_noircir(img1, 40);
-        Traitement.eclaircir_noircir(img2, 40);
+        Traitement.eclaircir_noircir(img1, 100);
+        Traitement.eclaircir_noircir(img2, 100);
         
         Traitement.ecrire(file3, img1);
         Traitement.ecrire(file4, img2);
